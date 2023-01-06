@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Page from './Page';
 
 function App() {
+  const [data, setData] = useState(null);
+
+  const handleFileSelect = event => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = event => {
+      const json = JSON.parse(event.target.result);
+      setData(json);
+    };
+    reader.readAsText(file);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input type="file" onChange={handleFileSelect} />
+      {data && <Page data={data} />}
     </div>
   );
 }
