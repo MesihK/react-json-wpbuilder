@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import Page from './Page';
+import { Routes, Route } from "react-router-dom";
 
-function App() {
+function Whoops404() { 
+  return ( <div> <h1>Resource not found</h1> </div>);
+}
+
+function Home(){
   const [data, setData] = useState(null);
 
   const handleFileSelect = event => {
@@ -15,9 +20,21 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <>
       <input type="file" onChange={handleFileSelect} />
       {data && <Page data={data} />}
+    </>
+  )
+}
+
+function App() {
+
+  return (
+    <div className="App">
+      <Routes> 
+        <Route path="/" element={<Home />} />
+        <Route path="*" element={<Whoops404 />} />
+      </Routes>
     </div>
   );
 }
