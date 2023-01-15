@@ -1,0 +1,13 @@
+{
+    "h1": "This is a test",
+    "p": "A paragraph",
+    "p:page2": {
+        "h2": "Secondary page",
+        "p": "Another paragraph",
+        "Seq": "MAACCAACAKKV"
+    },
+    "Table": {
+        "columns": ["l:column1","column2"],
+        "rows":[["/page1",1],["/page2",2]]
+    }
+}
