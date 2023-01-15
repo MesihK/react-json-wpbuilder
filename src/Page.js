@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactSequenceViewer from 'react-sequence-viewer';
 import BasicDataTable from './BasicDataTable';
+import MUIDataTable from './MUIDataTable';
 
   const Page = ({ data }) => {
     return (
@@ -12,7 +13,7 @@ import BasicDataTable from './BasicDataTable';
           else if (key === 'Seq')
             return <ReactSequenceViewer sequence={value}  key={index} />
           else if (key === 'Table'){
-            return <BasicDataTable {...value} key={index}/>
+            return <MUIDataTable {...value} key={index}/>
           }
           else
             return React.createElement(key, { key: index }, value)
