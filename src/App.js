@@ -23,10 +23,13 @@ function Home(){
   const location = useLocation();
   const pathElements = location.pathname.split('/').filter(Boolean);
   let content = data;
-  console.log("Hello",pathElements,content)
   pathElements.forEach(pathElement => {
-    content = content[pathElement];
+    if(content.hasOwnProperty('p:'+pathElement))
+      content = content['p:'+pathElement];
+    else
+      content = {'h2':pathElement+' not found!'};
   });
+  console.log("Hello",pathElements,content)
 
   return (
     <>

@@ -7,7 +7,7 @@ import BasicDataTable from './BasicDataTable';
       <div>
         {Object.keys(data).map((key, index) => {
           const value = data[key];
-          if (key === 'Page')
+          if (key.startsWith('p:')) //it's a page don't render it.
             return
           else if (key === 'Seq')
             return <ReactSequenceViewer sequence={value}  key={index} />
