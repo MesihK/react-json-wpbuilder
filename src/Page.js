@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactSequenceViewer from 'react-sequence-viewer';
-import DataTable from 'react-data-table-component';
+import BasicDataTable from './BasicDataTable';
 
   const Page = ({ data }) => {
     return (
@@ -12,18 +12,7 @@ import DataTable from 'react-data-table-component';
           else if (key === 'Seq')
             return <ReactSequenceViewer sequence={value}  key={index} />
           else if (key === 'Table'){
-            var columns = []
-            for (var c of value['Columns']){
-                var f = c["selector"].split(' => ')
-                columns.push({
-                    name: c["name"],
-                    selector: new Function(f[0], 'return ' + f[1]),
-                    sortable: true
-                })
-            }
-            console.log(value['Columns'])
-            console.log(columns)
-            return <DataTable columns={columns} data={value['Data']} key={index} pagination />
+            return <BasicDataTable {...value} key={index}/>
           }
           else
             return React.createElement(key, { key: index }, value)
