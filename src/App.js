@@ -1,28 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Page from './Page';
-import { Routes, Route } from "react-router-dom";
-
-function Whoops404() { 
-  return ( <div> <h1>Resource not found</h1> </div>);
-}
+import { Routes, Route, useLocation } from "react-router-dom";
 
 function Home(){
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(
+    JSON.parse(localStorage.getItem('data')) || {}
+  );
 
-  const handleFileSelect = event => {
+  useEffect(() => {
+    localStorage.setItem('data', JSON.stringify(data));
+  }, [data]);
+
+  const handleFileSelect = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
-    reader.onload = event => {
-      const json = JSON.parse(event.target.result);
-      setData(json);
+    reader.onload = (e) => {
+      setData(JSON.parse(e.target.result));
     };
     reader.readAsText(file);
-  };
+  }
+
+  const location = useLocation();
+  const pathElements = location.pathname.split('/').filter(Boolean);
+  let content = data;
+  console.log("Hello",pathElements,content)
+  pathElements.forEach(pathElement => {
+    content = content[pathElement];
+  });
 
   return (
     <>
-      <input type="file" onChange={handleFileSelect} />
-      {data && <Page data={data} />}
+      {<input type="file" onChange={handleFileSelect} />}
+      {content && <Page data={content} />}
     </>
   )
 }
@@ -32,8 +41,7 @@ function App() {
   return (
     <div className="App">
       <Routes> 
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<Whoops404 />} />
+        <Route path="*" element={<Home />} />
       </Routes>
     </div>
   );
