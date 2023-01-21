@@ -14,6 +14,7 @@
     "react": "^18.2.0",
     "react-data-table-component": "^7.5.3",
     "react-dom": "^18.2.0",
+    "react-ngl": "^0.2.3",
     "react-router": "^6.6.2",
     "react-router-dom": "^6.6.2",
     "react-scripts": "5.0.1",
@@ -44,5 +45,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy":"http://localhost:8080"
 }

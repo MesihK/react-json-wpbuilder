@@ -4,7 +4,12 @@
     "p:page2": {
         "h2": "Secondary page",
         "p": "Another paragraph",
-        "Seq": "MAACCAACAKKV"
+        "Seq": "MAACCAACAKKV",
+        "PDB": {
+            "path":"rcsb://3pqr",
+            "width":"200px",
+            "height":"200px"
+        }
     },
     "Table": {
         "columns": ["l:column1","column2"],
