@@ -1,11 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import Page from './Page';
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 function Home(){
+  const navigate = useNavigate()
+  let query = useQuery();
+  let jsonPath = query.get("json")
   const [data, setData] = useState(
     JSON.parse(localStorage.getItem('data')) || {}
   );
+
+  
+  if (jsonPath){
+    console.log("load json from:",jsonPath);
+    fetch(jsonPath).then(response => response.json()).then(jsonData => {
+      console.log(jsonData);
+      setData(jsonData);
+      navigate('/');
+    }).catch(error => {
+      console.error(error);
+    });
+  }
 
   useEffect(() => {
     localStorage.setItem('data', JSON.stringify(data));
