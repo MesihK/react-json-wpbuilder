@@ -1,17 +1,17 @@
 {
-    "h1": "This is a test",
-    "p": "A paragraph",
-    "p:page2": {
-        "h2": "Secondary page",
-        "p": "Another paragraph",
-        "Seq": "MAACCAACAKKV",
-        "PDB": {
+    "h1:title": "This is a test",
+    "p:p1": "A paragraph",
+    "page:page2": {
+        "h2:p2title": "Secondary page",
+        "p:p2": "Another paragraph",
+        "seq:testseq": "MAACCAACAKKV",
+        "pdb:3pqr": {
             "path":"rcsb://3pqr",
             "width":"200px",
             "height":"200px"
         }
     },
-    "Table": {
+    "table:t1": {
         "columns": ["l:column1","column2"],
         "rows":[["/page1",1],["/page2",2]]
     }

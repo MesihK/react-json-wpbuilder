@@ -10,19 +10,20 @@ import { Grid } from '@mui/material';
     return (
       <Grid container align="center" justify="center" direction="column">
         {Object.keys(data).map((key, index) => {
+          const [type, name] = key.split(':');
           const value = data[key];
-          console.log(key,value)
-          if (key.startsWith('p:')) //it's a page don't render it.
+          console.log(key,type,name,value)
+          if (type === 'page') //it's a page don't render it.
             return
-          else if (key === 'Seq')
-            return <ReactSequenceViewer sequence={value}  key={2*index} />
-          else if (key === 'Table'){
-            return <Grid item key={2*index}><MUIDataTable {...value} key={2*index+1}/></Grid>
+          else if (type === 'seq')
+            return <ReactSequenceViewer sequence={value}  key={key} />
+          else if (type === 'table'){
+            return <Grid item key={'g:'+key}><MUIDataTable {...value} key={key}/></Grid>
           }
-          else if (key === 'PDB')
-            return <Grid item key={2*index}><PDB {...value} key={2*index+1}/></Grid>
+          else if (type === 'pdb')
+            return <Grid item key={'g:'+key}><PDB {...value} key={key}/></Grid>
           else
-            return React.createElement(key, { key: 2*index }, value)
+            return React.createElement(type, { key: key }, value)
         })}
       </Grid>
     );

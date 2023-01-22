@@ -1,11 +1,45 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import { renderLink } from './renderLink';
-import { styled } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 
-//const jsonData = '{ "columns":["l:column1","column2"], "rows":[["link1",1],["link2",2]]}';
+const ODD_OPACITY = 0.2;
+
+const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+  [`& .${gridClasses.row}.even`]: {
+    backgroundColor: theme.palette.grey[200],
+    '&:hover, &.Mui-hovered': {
+      backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
+      '@media (hover: none)': {
+        backgroundColor: 'transparent',
+      },
+    },
+    '&.Mui-selected': {
+      backgroundColor: alpha(
+        theme.palette.primary.main,
+        ODD_OPACITY + theme.palette.action.selectedOpacity,
+      ),
+      '&:hover, &.Mui-hovered': {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          ODD_OPACITY +
+            theme.palette.action.selectedOpacity +
+            theme.palette.action.hoverOpacity,
+        ),
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          backgroundColor: alpha(
+            theme.palette.primary.main,
+            ODD_OPACITY + theme.palette.action.selectedOpacity,
+          ),
+        },
+      },
+    },
+  },
+}));
+
 const Link = styled('a')({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
@@ -17,16 +51,18 @@ function MUIDataTable({columns, rows}){
     const cols = columns.map(column => {
         if(column.startsWith("l:")){
             return { 
-                headerName: column.startsWith('l:') ? column.substring(2) : column, 
+                headerName: column.substring(2), 
                 field: column, 
                 width: 150,
+                headerClassName: 'b',
                 renderCell: renderLink
             }
         }
         else{
             return { 
-                headerName: column.startsWith('l:') ? column.substring(2) : column, 
+                headerName: column, 
                 field: column, 
+                headerClassName: 'b',
                 width: 150
             }
         }
@@ -39,8 +75,24 @@ function MUIDataTable({columns, rows}){
     });
     console.log('table',cols,tableData)
     return (
-        <Box sx={{ height: 200, width: '80%' }}>
-          <DataGrid rows={tableData} columns={cols} />
+        <Box sx={{ height: 600, width: '80%' }}>
+          <StripedDataGrid rows={tableData} columns={cols}    
+            density="compact"     
+            components={{ Toolbar: GridToolbar }}
+            componentsProps={{
+            toolbar: {
+                showQuickFilter: true,
+                quickFilterProps: { debounceMs: 500 },
+            },
+            }}
+            getRowClassName={(params) =>
+                params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
+            }
+            sx={{
+                '.columnHeaders': {
+                    typography: 'subtitle2',    
+                },
+            }}/>
         </Box>
     );
 }

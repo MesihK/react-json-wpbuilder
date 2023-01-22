@@ -15,7 +15,6 @@ function Home(){
     JSON.parse(localStorage.getItem('data')) || {}
   );
 
-  
   if (jsonPath){
     console.log("load json from:",jsonPath);
     fetch(jsonPath).then(response => response.json()).then(jsonData => {
@@ -44,12 +43,12 @@ function Home(){
   const pathElements = location.pathname.split('/').filter(Boolean);
   let content = data;
   pathElements.forEach(pathElement => {
-    if(content.hasOwnProperty('p:'+pathElement))
-      content = content['p:'+pathElement];
+    if(content.hasOwnProperty('page:'+pathElement))
+      content = content['page:'+pathElement];
     else
-      content = {'h2':pathElement+' not found!'};
+      content = {'h2:notfound':pathElement+' not found!'};
   });
-  console.log("Hello",pathElements,content)
+  console.log("Hello",pathElements,content,data)
 
   return (
     <>
