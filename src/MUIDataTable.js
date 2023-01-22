@@ -53,8 +53,8 @@ function MUIDataTable({columns, rows}){
             return { 
                 headerName: column.substring(2), 
                 field: column, 
-                width: 150,
-                headerClassName: 'b',
+                flex: 1,
+                minWidth: 80,
                 renderCell: renderLink
             }
         }
@@ -62,8 +62,9 @@ function MUIDataTable({columns, rows}){
             return { 
                 headerName: column, 
                 field: column, 
+                flex: 1,
                 headerClassName: 'b',
-                width: 150
+                minWidth: 80
             }
         }
     });
@@ -75,9 +76,10 @@ function MUIDataTable({columns, rows}){
     });
     console.log('table',cols,tableData)
     return (
-        <Box sx={{ height: 600, width: '80%' }}>
+        <Box sx={{ width: '80%' }}>
           <StripedDataGrid rows={tableData} columns={cols}    
-            density="compact"     
+            density="compact" 
+            autoHeight={true}    
             components={{ Toolbar: GridToolbar }}
             componentsProps={{
             toolbar: {
