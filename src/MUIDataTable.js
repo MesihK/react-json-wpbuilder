@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
 import { renderLink } from './renderLink';
 import { alpha, styled } from '@mui/material/styles';
@@ -69,26 +68,24 @@ function MUIDataTable({columns, rows}){
     });
     console.log('table',cols,tableData)
     return (
-        <Box sx={{ width: '80%' }}>
-          <StripedDataGrid rows={tableData} columns={cols}    
-            density="compact" 
-            autoHeight={true}    
-            components={{ Toolbar: GridToolbar }}
-            componentsProps={{
-            toolbar: {
-                showQuickFilter: true,
-                quickFilterProps: { debounceMs: 500 },
+        <StripedDataGrid rows={tableData} columns={cols}    
+        density="compact" 
+        autoHeight={true}    
+        components={{ Toolbar: GridToolbar }}
+        componentsProps={{
+        toolbar: {
+            showQuickFilter: true,
+            quickFilterProps: { debounceMs: 500 },
+        },
+        }}
+        getRowClassName={(params) =>
+            params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
+        }
+        sx={{
+            '.MuiDataGrid-columnHeaderTitle': {
+                typography: 'subtitle1',    
             },
-            }}
-            getRowClassName={(params) =>
-                params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
-            }
-            sx={{
-                '.MuiDataGrid-columnHeaderTitle': {
-                    typography: 'subtitle1',    
-                },
-            }}/>
-        </Box>
+        }}/>
     );
 }
 
