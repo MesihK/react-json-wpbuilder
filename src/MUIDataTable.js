@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
-import { Button } from '@mui/material';
 import { renderLink } from './renderLink';
 import { alpha, styled } from '@mui/material/styles';
 
@@ -40,12 +39,6 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-const Link = styled('a')({
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    color: 'inherit',
-  });
 function MUIDataTable({columns, rows}){
 
     const cols = columns.map(column => {

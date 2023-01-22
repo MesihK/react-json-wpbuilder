@@ -1,6 +1,6 @@
 import {React, useMemo} from 'react';
 import { Stage, Component } from 'react-ngl';
-import { Card, CardContent, Typography, Box } from '@mui/material';
+import { Card, CardContent, Box } from '@mui/material';
 
 
 
