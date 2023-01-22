@@ -1,12 +1,13 @@
 {
     "h1:title": "This is a test",
     "p:p1": "A paragraph",
+    "md:markdowntest": "A paragraph with *emphasis* and **strong importance**.\n\n> A block quote with ~strikethrough~ and a URL: https://reactjs.org.\n\n* Lists\n* [ ] todo\n* [x] done\n\nA table:\n\n| a | b |\n| - | - |\n",
     "page:page2": {
         "h2:p2title": "Secondary page",
         "p:p2": "Another paragraph",
         "seq:testseq": "MAACCAACAKKV",
         "pdb:3pqr": {
-            "path":"rcsb://3pqr",
+            "path":"https://alphafold.ebi.ac.uk/files/AF-Q9C0X5-F1-model_v4.pdb",
             "width":"200px",
             "height":"200px"
         }

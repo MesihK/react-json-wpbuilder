@@ -3,6 +3,7 @@ import ReactSequenceViewer from 'react-sequence-viewer';
 import BasicDataTable from './BasicDataTable';
 import MUIDataTable from './MUIDataTable';
 import PDB from './PDB';
+import MD from './MD';
 import { Grid } from '@mui/material';
 
 
@@ -22,6 +23,8 @@ import { Grid } from '@mui/material';
           }
           else if (type === 'pdb')
             return <Grid item key={'g:'+key}><PDB {...value} key={key}/></Grid>
+          else if (type === 'md')
+            return <MD markdown={value}  key={key} />
           else
             return React.createElement(type, { key: key }, value)
         })}
