@@ -89,8 +89,8 @@ function MUIDataTable({columns, rows}){
                 params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
             }
             sx={{
-                '.columnHeaders': {
-                    typography: 'subtitle2',    
+                '.MuiDataGrid-columnHeaderTitle': {
+                    typography: 'subtitle1',    
                 },
             }}/>
         </Box>

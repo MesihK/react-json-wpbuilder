@@ -6,7 +6,7 @@ const Link = styled('a')({
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
-  color: 'inherit',
+  //color: 'inherit',
 });
 
 export const DemoLink = React.memo(function DemoLink(props) {
@@ -26,10 +26,11 @@ export function renderLink(params) {
   if (params.value == null) {
     return '';
   }
+  const [href, value] = params.value.split(':')
 
   return (
-    <DemoLink href={params.value} tabIndex={params.tabIndex}>
-      {params.value}
+    <DemoLink href={href} tabIndex={params.tabIndex}>
+      {value}
     </DemoLink>
   );
 }
