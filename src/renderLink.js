@@ -25,7 +25,7 @@ export function renderLink(params) {
   if (params.value == null) {
     return '';
   }
-  const [href, value] = params.value.split(':')
+  const [href, value] = params.value.split('@')
 
   return (
     <DemoLink href={href} tabIndex={params.tabIndex}>
