@@ -15,7 +15,6 @@ import { Grid, Container } from '@mui/material';
         {Object.keys(data).map((key, index) => {
           const [type, name] = key.split(':');
           const value = data[key];
-          console.log(key,type,name,value)
           if (type === 'page') //it's a page don't render it.
             return
           else if (type === 'seq')

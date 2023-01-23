@@ -14,7 +14,6 @@ export const DemoLink = React.memo(function DemoLink(props) {
     //event.preventDefault();
     //event.stopPropagation();
   };
-  console.log('props',props)
   return (
     <Link tabIndex={props.tabIndex} onClick={handleClick} href={props.href}>
       {props.children}

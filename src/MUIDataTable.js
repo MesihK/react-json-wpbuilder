@@ -66,7 +66,6 @@ function MUIDataTable({columns, rows}){
         columns.map((col,i)=> obj[col] = row[i])
         return obj;
     });
-    console.log('table',cols,tableData)
     return (
         <StripedDataGrid rows={tableData} columns={cols}    
         density="compact" 
