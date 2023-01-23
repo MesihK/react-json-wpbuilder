@@ -12,7 +12,7 @@ import { v4 } from 'uuid';
     return (
       //<Grid container align="center" justify="center" direction="column">
       <Container>
-      <Grid container>
+      <Grid container spacing={2}>
         {Object.keys(data).map((key, index) => {
           const [type, name, xs=12] = key.split(':');
           const value = data[key];
