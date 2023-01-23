@@ -5,6 +5,7 @@ import MUIDataTable from './MUIDataTable';
 import PDB from './PDB';
 import MD from './MD';
 import { Grid, Container } from '@mui/material';
+import { v4 } from 'uuid';
 
 
   const Page = ({ data }) => {
@@ -18,7 +19,7 @@ import { Grid, Container } from '@mui/material';
           if (type === 'page') //it's a page don't render it.
             return
           else if (type === 'seq')
-            return <Grid item xs={xs} key={'g:'+key}><ReactSequenceViewer sequence={value}  key={key} /></Grid>
+            return <Grid item xs={xs} key={'g:'+key}><ReactSequenceViewer sequence={value}  key={key} id={v4()} /></Grid>
           else if (type === 'table'){
             return <Grid item xs={xs} key={'g:'+key}><MUIDataTable {...value} key={key}/></Grid>
           }
