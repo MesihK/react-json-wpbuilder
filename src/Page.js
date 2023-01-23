@@ -13,21 +13,21 @@ import { Grid, Container } from '@mui/material';
       <Container>
       <Grid container>
         {Object.keys(data).map((key, index) => {
-          const [type, name] = key.split(':');
+          const [type, name, xs=12] = key.split(':');
           const value = data[key];
           if (type === 'page') //it's a page don't render it.
             return
           else if (type === 'seq')
-            return <ReactSequenceViewer sequence={value}  key={key} />
+            return <Grid item xs={xs} key={'g:'+key}><ReactSequenceViewer sequence={value}  key={key} /></Grid>
           else if (type === 'table'){
-            return <Grid item xs={12} key={'g:'+key}><MUIDataTable {...value} key={key}/></Grid>
+            return <Grid item xs={xs} key={'g:'+key}><MUIDataTable {...value} key={key}/></Grid>
           }
           else if (type === 'pdb')
-            return <Grid item  xs={12}  key={'g:'+key}><PDB {...value} key={key}/></Grid>
+            return <Grid item  xs={xs}  key={'g:'+key}><PDB {...value} key={key}/></Grid>
           else if (type === 'md')
-            return <Grid item  xs={12}  key={'g:'+key}><MD markdown={value}  key={key} /></Grid>
+            return <Grid item  xs={xs}  key={'g:'+key}><MD markdown={value}  key={key} /></Grid>
           else
-            return <Grid item  xs={12}  key={'g:'+key}>{React.createElement(type, { key: key }, value)}</Grid>
+            return <Grid item  xs={xs}  key={'g:'+key}>{React.createElement(type, { key: key }, value)}</Grid>
         })}
       </Grid>
       </Container>
