@@ -7,7 +7,7 @@ const Link = styled('a')({
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
-  'text-decoration': 'underline',
+  textDecoration: 'underline',
   //color: 'inherit',
 });
 
