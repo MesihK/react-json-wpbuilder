@@ -123,9 +123,13 @@ function ResponsiveAppBar({pages, name, handleFileUpload}) {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <input type="file" id="fileInput" onChange={handleFileUpload} style={{ display: "none" }}/>
+            <input type="file" id="fileInput" onChange={handleFileUpload} accept=".json" style={{ display: "none" }}/>
             <Tooltip title="Load JSON File">
-              <UploadFileIcon onClick={() => document.getElementById("fileInput").click()} sx={{ p: 0 }}/>
+              <UploadFileIcon onClick={() => {
+                let fileInput = document.getElementById("fileInput");
+                fileInput.value = ''; //reset the value so that user can upload same json over and over.
+                fileInput.click();
+              }} sx={{ p: 0 }}/>
             </Tooltip>
           </Box>
         </Toolbar>
