@@ -17,7 +17,7 @@ import {useNavigate } from "react-router-dom";
 
 //const pages = ['Products', 'Pricing', 'Blog'];
 
-function ResponsiveAppBar({pages, handleFileUpload}) {
+function ResponsiveAppBar({pages, name, handleFileUpload}) {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -47,12 +47,12 @@ function ResponsiveAppBar({pages, handleFileUpload}) {
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.3rem',
+              letterSpacing: '.2rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
-            JSON-WP
+            {name}
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -108,7 +108,7 @@ function ResponsiveAppBar({pages, handleFileUpload}) {
               textDecoration: 'none',
             }}
           >
-            JSON-WP
+            {name}
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
