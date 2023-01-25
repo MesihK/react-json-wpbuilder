@@ -3,6 +3,7 @@ import Page from './Page';
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Dexie from 'dexie';
 import AppBar from './AppBar';
+import Footer from './Footer';
 
 const db = new Dexie('myDatabase');
 
@@ -87,6 +88,7 @@ function Home(){
     <>
       <AppBar pages={pages} handleFileUpload={handleFileSelect}/>
       {content && <Page data={content} />}
+      <Footer />
     </>
   )
 }
