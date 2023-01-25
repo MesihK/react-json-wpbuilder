@@ -18,5 +18,14 @@
     "table:t1": {
         "columns": ["l:column1","column2"],
         "rows":[["/page1@Page 1",1],["/page2@Page 2",2]]
-    }
+    },
+    "plot:p1:6": {
+        "data": [{
+            "x": ["giraffes","orangutans","monkeys"],
+            "y": [20,14,23],
+            "type": "bar"
+        }],
+        "height":400
+    },
+    "md:md2:6":"test"
 }
