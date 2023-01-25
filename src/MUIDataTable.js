@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
-import { renderLink } from './renderLink';
+import { RenderLink } from './RenderLink';
 import { alpha, styled } from '@mui/material/styles';
 
 const ODD_OPACITY = 0.2;
@@ -47,7 +47,7 @@ function MUIDataTable({columns, rows}){
                 field: column, 
                 flex: 1,
                 minWidth: 80,
-                renderCell: renderLink
+                renderCell: RenderLink
             }
         }
         else{
