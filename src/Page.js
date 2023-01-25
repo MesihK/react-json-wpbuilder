@@ -16,7 +16,7 @@ import { v4 } from 'uuid';
         {Object.keys(data).map((key, index) => {
           const [type, name, xs=12] = key.split(':');
           const value = data[key];
-          if (type === 'page') //it's a page don't render it.
+          if (type === 'page' || type === 'navpage') //it's a page don't render it.
             return
           else if (type === 'seq')
             return <Grid item xs={xs} key={'g:'+key}><ReactSequenceViewer sequence={value}  key={key} id={v4()} /></Grid>

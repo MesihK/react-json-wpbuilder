@@ -11,6 +11,10 @@
             "height":"400px"
         }
     },
+    "navpage:about":{
+        "h2:abouttitle":"About",
+        "md:info":"Hello this is a website builder."
+    },
     "table:t1": {
         "columns": ["l:column1","column2"],
         "rows":[["/page1@Page 1",1],["/page2@Page 2",2]]

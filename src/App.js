@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Page from './Page';
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Dexie from 'dexie';
+import AppBar from './AppBar';
 
 const db = new Dexie('myDatabase');
 
@@ -67,14 +68,24 @@ function Home(){
     pathElements.forEach(pathElement => {
       if(content.hasOwnProperty('page:'+pathElement))
         content = content['page:'+pathElement];
+      else if(content.hasOwnProperty('navpage:'+pathElement))
+        content = content['navpage:'+pathElement];
       else
         content = {'h2:notfound':pathElement+' not found!'};
     });
   }
 
+  let pages = [];
+  Object.keys(data).forEach(key => {
+    const [type, name, xs=12] = key.split(':');
+    if (type == "navpage"){
+        pages.push(name);
+    }
+  })
+
   return (
     <>
-      {<input type="file" onChange={handleFileSelect} />}
+      <AppBar pages={pages} handleFileUpload={handleFileSelect}/>
       {content && <Page data={content} />}
     </>
   )
