@@ -41,7 +41,7 @@ function ResponsiveAppBar({pages, handleFileUpload}) {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            onClick={() => {navigate('/');}}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -96,7 +96,7 @@ function ResponsiveAppBar({pages, handleFileUpload}) {
             variant="h5"
             noWrap
             component="a"
-            href="/"
+            onClick={() => {navigate('/');}}
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
