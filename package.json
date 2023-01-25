@@ -10,7 +10,7 @@
     "@mui/x-data-grid-generator": "^5.17.18",
     "@testing-library/jest-dom": "^5.16.5",
     "dexie": "^3.2.2",
-    "plotly.js": "^2.18.0",
+    "plotly.js-basic-dist-min": "^2.18.0",
     "react": "^18.2.0",
     "react-data-table-component": "^7.5.3",
     "react-dom": "^18.2.0",

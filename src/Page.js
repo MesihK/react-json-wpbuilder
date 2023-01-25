@@ -6,7 +6,7 @@ import PDB from './PDB';
 import MD from './MD';
 import { Grid, Container } from '@mui/material';
 import { v4 } from 'uuid';
-import Plot from 'react-plotly.js';
+import PlotlyChart from './PlotlyChart';
 
 
   const Page = ({ data }) => {
@@ -30,14 +30,7 @@ import Plot from 'react-plotly.js';
           else if (type === 'md')
             return <Grid item  xs={xs}  key={'g:'+key}><MD markdown={value}  key={key} /></Grid>
           else if (type === 'plot')
-            return <Grid item  xs={xs}  key={'g:'+key}><Plot data={value.data}
-            useResizeHandler
-            style={{ width: '100%', height: '100%' }}
-            layout={{
-              autosize: true,
-              height: value.height
-            }} key={key} />
-            </Grid>
+            return <Grid item  xs={xs}  key={'g:'+key}><PlotlyChart {...value} key={key}/></Grid>
           else
             return <Grid item  xs={xs}  key={'g:'+key}>{React.createElement(type, { key: key }, value)}</Grid>
         })}
