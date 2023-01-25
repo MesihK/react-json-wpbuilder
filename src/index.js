@@ -7,7 +7,8 @@ const repoName = 'react-json-wpbuilder'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Router basename={`/${repoName}`}>
+  //<Router basename={`/${repoName}`}>
+  <Router>
     <App />
   </Router>
 );

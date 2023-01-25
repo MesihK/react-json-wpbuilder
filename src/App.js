@@ -6,13 +6,8 @@ import Dexie from 'dexie';
 const db = new Dexie('myDatabase');
 
 db.version(1).stores({
-  myObjectStore: 'data'
+  myObjectStore: 'id, data'
 });
-
-db.open({server: "myDatabase", version: 1, schema: {myObjectStore: "data"}, shared: true }).catch(function(error) {
-  console.error("db Open failed: " + error);
-});
-
 
 function useQuery() {
   const { search } = useLocation();
@@ -41,7 +36,7 @@ function Home(){
     console.log("load json from:",jsonPath);
     fetch(jsonPath).then(response => response.json()).then(jsonData => {
       //update the database
-      db.myObjectStore.put({id:1, data: JSON.stringify(jsonData)}).then(() => console.log('sucsefully data written to db'))
+      db.myObjectStore.put({id:1, data: JSON.stringify(jsonData)},1).then(() => console.log('sucsefully data written to db'))
         .catch(error => console.log('db write error', error));;
       setData(jsonData);
       navigate('/');
