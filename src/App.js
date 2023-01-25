@@ -9,6 +9,11 @@ db.version(1).stores({
   myObjectStore: 'data'
 });
 
+db.open({server: "myDatabase", version: 1, schema: {myObjectStore: "data"}, shared: true }).catch(function(error) {
+  console.error("db Open failed: " + error);
+});
+
+
 function useQuery() {
   const { search } = useLocation();
 
