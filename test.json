@@ -1,0 +1,18 @@
+{
+    "h1:title": "This is a test",
+    "p:p1": "A paragraph",
+    "md:markdowntest": "This is a markdown test:\n\nA paragraph with *emphasis* and **strong importance**.\n\n> A block quote with ~strikethrough~ and a URL: https://reactjs.org.\n\n* Lists\n* [ ] todo\n* [x] done\n\nA table:\n\n| a | b |\n| - | - |\n",
+    "page:page2": {
+        "h2:p2title": "Secondary page",
+        "p:p2:4": "Another paragraph",
+        "seq:testseq:4": "MAACCAACAKKV",
+        "pdb:3pqr:4": {
+            "path":"rcsb://4hhb",
+            "height":"400px"
+        }
+    },
+    "table:t1": {
+        "columns": ["l:column1","column2"],
+        "rows":[["/page1@Page 1",1],["/page2@Page 2",2]]
+    }
+}
