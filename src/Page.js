@@ -4,7 +4,7 @@ import BasicDataTable from './BasicDataTable';
 import MUIDataTable from './MUIDataTable';
 import PDB from './PDB';
 import MD from './MD';
-import { Grid, Container } from '@mui/material';
+import { Grid, Container, CardMedia } from '@mui/material';
 import { v4 } from 'uuid';
 import PlotlyChart from './PlotlyChart';
 
@@ -31,6 +31,8 @@ import PlotlyChart from './PlotlyChart';
             return <Grid item  xs={xs}  key={'g:'+key}><MD markdown={value}  key={key} /></Grid>
           else if (type === 'plot')
             return <Grid item  xs={xs}  key={'g:'+key}><PlotlyChart {...value} key={key}/></Grid>
+          else if (type === 'img')
+            return <Grid item  xs={xs}  key={'g:'+key}><CardMedia component="img" image={value.src} height={value.height} sx={{ padding: "1em 1em 0 1em", objectFit: "contain" }} key={key}/></Grid>
           else
             return <Grid item  xs={xs}  key={'g:'+key}>{React.createElement(type, { key: key }, value)}</Grid>
         })}

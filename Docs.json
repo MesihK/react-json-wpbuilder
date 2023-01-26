@@ -5,5 +5,15 @@
         "h2:title":  "A title",
         "p:info":  "And here is a paragraph"
     },
-    "md:lvl2": "***\n\nhello."
+    "md:lvl2": "***\n\n",
+    "md:info2:6": "You can create an `About` page and with `navpage` tag to show it in `AppBar` 🪄 \n```js\n{\n\t\"navpage:about\": {\n\t\t\"h2:title\":  \"About Page\",\n\t\t\"p:info\":  \"This site creates static websites from json.\"\n\t},\n\t\"p:info\":  \"And here is a paragraph\"\n}\n```",
+    "navpage:about": {
+		"h2:title":  "About Page",
+		"p:info":  "This site creates static websites from json."
+	},
+    "img:navpage:6": {
+        "src": "https://raw.githubusercontent.com/MesihK/react-json-wpbuilder/master/imgs/navpage.png",
+        "height": 200
+    },
+    "md:lvl3": "***\n\n"
 }
