@@ -6,7 +6,7 @@ import ScreenShareIcon from '@mui/icons-material/ScreenShare';
 
 export default function Footer() {
   return (
-    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+    <Paper sx={{ position: 'sticky', bottom: 0, left: 0, right: 0 }} elevation={3}>
         <Grid container direction="column" alignItems="center">
           <Grid item xs={12}>
             <div style={{
