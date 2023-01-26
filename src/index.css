@@ -1,3 +1,6 @@
 * {
     font-family: "Roboto";
 }
+body {
+    padding-bottom: 50px;
+}
