@@ -1,7 +1,7 @@
 {
     "h1:title":"JSON Web Page Builder Documents",
     "md:info:6":"Here is an basic example\n\n```js\n{\n\t\"h2:title\":  \"A title\",\n\t\"p:info\":  \"And here is a paragraph\"\n}\n```\n👉 This is shown in the right .",
-    "cntpage:ex1:6": {
+    "section:ex1:6": {
         "h2:title":  "A title",
         "p:info":  "And here is a paragraph"
     },

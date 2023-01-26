@@ -20,7 +20,7 @@ import UL from './UL';
           const value = data[key];
           if (type === 'page' || type === 'navpage') //it's a page don't render it.
             return
-          if (type === 'cntpage') //but if it's a container page then render it
+          if (type === 'section') //but if it's a container page then render it
             return <Grid item  xs={xs}  key={'g:'+key}><Page data={value} key={key}/></Grid>
           else if (type === 'seq')
             return <Grid item xs={xs} key={'g:'+key}><ReactSequenceViewer sequence={value}  key={key} id={v4()} /></Grid>
