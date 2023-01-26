@@ -4,6 +4,7 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Dexie from 'dexie';
 import AppBar from './AppBar';
 import Footer from './Footer';
+import docs from './Docs.json';
 
 const db = new Dexie('myDatabase');
 
@@ -22,7 +23,7 @@ function Home(){
   let query = useQuery();
   let jsonPath = query.get("json")
 
-  const [data, setData] = useState({content: {}, name:'JSON-WP'});
+  const [data, setData] = useState({content: docs, name:'Docs'});
 
   useEffect(() => {
     //If a json path given through the url wait for it to be loaded instead of getting data from local db
