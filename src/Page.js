@@ -7,6 +7,7 @@ import MD from './MD';
 import { Grid, Container, CardMedia } from '@mui/material';
 import { v4 } from 'uuid';
 import PlotlyChart from './PlotlyChart';
+import UL from './UL';
 
 
   const Page = ({ data }) => {
@@ -33,6 +34,8 @@ import PlotlyChart from './PlotlyChart';
             return <Grid item  xs={xs}  key={'g:'+key}><PlotlyChart {...value} key={key}/></Grid>
           else if (type === 'img')
             return <Grid item  xs={xs}  key={'g:'+key}><CardMedia component="img" image={value.src} height={value.height} sx={{ padding: "1em 1em 0 1em", objectFit: "contain" }} key={key}/></Grid>
+          else if (type === 'ul')
+            return <Grid item  xs={xs}  key={'g:'+key}><UL items={value} key={key}/></Grid>
           else
             return <Grid item  xs={xs}  key={'g:'+key}>{React.createElement(type, { key: key }, value)}</Grid>
         })}
