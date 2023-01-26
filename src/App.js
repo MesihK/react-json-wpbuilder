@@ -80,7 +80,7 @@ function Home(){
       else if(content.hasOwnProperty('navpage:'+pathElement))
         content = content['navpage:'+pathElement];
       else
-        content = {'h2:notfound':pathElement+' not found!'};
+        content = {'h2:notfound':location.pathname+' not found!'};
     });
   }
 
