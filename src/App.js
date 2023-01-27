@@ -5,6 +5,30 @@ import Dexie from 'dexie';
 import AppBar from './AppBar';
 import Footer from './Footer';
 import docs from './Docs.json';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+
+/*const theme = createTheme({
+  typography: {
+    fontSize: 9,
+  },
+});*/
+
+const theme = createTheme({
+  typography: {
+    h1:{
+      fontSize: "2rem",
+      fontWeight: 500
+    },
+    h2:{
+      fontSize: "1.7rem",
+      fontWeight: 500
+    },
+    h3:{
+      fontSize: "1.25rem",
+      fontWeight: 500
+    }
+  },
+});
 
 const db = new Dexie('myDatabase');
 
@@ -94,9 +118,11 @@ function Home(){
 
   return (
     <>
-      <AppBar pages={pages} name={data.name} handleFileUpload={handleFileSelect}/>
-      {content && <Page data={content} />}
-      <Footer />
+      <ThemeProvider theme={theme}>
+        <AppBar pages={pages} name={data.name} handleFileUpload={handleFileSelect}/>
+        {content && <Page data={content} />}
+        <Footer />
+      </ThemeProvider>
     </>
   )
 }
