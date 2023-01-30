@@ -21,7 +21,8 @@ export function RenderLink(params) {
   const [href, value] = params.value.split('@')
 
   const handleClick = (event) => {
-    navigate(href)
+    if(href.startsWith("http")) window.open(href, '_blank', 'noreferrer');
+    else navigate(href)
   };
 
   return (
