@@ -22,7 +22,7 @@ const Page = ({ data }) => {
         if (type === 'page' || type === 'navpage') //it's a page don't render it.
           return null;
         if (type === 'section') //but if it's a container page then render it
-          return <Grid item  xs={xs}  key={'g:'+key}><Paper sx={{ height: "100%"}} elevation={3}><Page data={value} key={key}/></Paper></Grid>
+          return <Grid item  xs={xs}  key={'g:'+key}><Paper sx={{ height: "100%", mb:2}} elevation={3}><Page data={value} key={key}/></Paper></Grid>
         else if (type === 'seq')
           return <Grid item xs={xs} key={'g:'+key}><ReactSequenceViewer sequence={value}  key={key} id={v4()} /></Grid>
         else if (type === 'table')

@@ -29,7 +29,7 @@ function PDB({ path, height = '400px', name }) {
     }, 300);
 
     return (
-        <Paper sx={{ mb: 2 }} elevation={1}>
+        <Paper elevation={1}>
             <Box textAlign='center'>
                 {name && <Typography variant='subtitle1'>{name}</Typography>}
                 <Stage height={height} params={params} cameraState={cameraState} onCameraMove={handleCameraMove} >
@@ -37,7 +37,7 @@ function PDB({ path, height = '400px', name }) {
                         if (cameraState == null) setTimeout(() => setCameraState({}), 200);
                     }} />
                 </Stage>
-                <Button variant="outlined" onClick={() => {
+                <Button variant="outlined" sx={{mb:1}} onClick={() => {
                     setCameraState({});
                 }}>Reset Camera</Button>
             </Box>
