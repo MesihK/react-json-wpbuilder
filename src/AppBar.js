@@ -13,11 +13,12 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import ScreenShareIcon from '@mui/icons-material/ScreenShare';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import {useNavigate } from "react-router-dom";
 
 //const pages = ['Products', 'Pricing', 'Blog'];
 
-function ResponsiveAppBar({pages, name, handleFileUpload}) {
+function ResponsiveAppBar({pages, name, handleFileUpload, handleDocumentation}) {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -123,6 +124,9 @@ function ResponsiveAppBar({pages, name, handleFileUpload}) {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Documentation">
+              <HelpOutlineIcon onClick={handleDocumentation} sx={{ p: 0 }}/>
+            </Tooltip>
             <input type="file" id="fileInput" onChange={handleFileUpload} accept=".json" style={{ display: "none" }}/>
             <Tooltip title="Load JSON File">
               <UploadFileIcon onClick={() => {

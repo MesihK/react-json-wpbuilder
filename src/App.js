@@ -110,10 +110,18 @@ function Home(){
     }
   })
 
+  const handleDocumentation = () => {
+    db.myObjectStore.put({id:1, data: JSON.stringify(docs), name:"Docs"},1).then(() => {
+      setData({content:docs, name:"Docs"});
+      navigate('/');
+      console.log('Load documents');
+    })
+  }
+
   return (
     <>
       <ThemeProvider theme={theme}>
-        <AppBar pages={pages} name={data.name} handleFileUpload={handleFileSelect}/>
+        <AppBar pages={pages} name={data.name} handleFileUpload={handleFileSelect} handleDocumentation={handleDocumentation}/>
         {content && <Page data={content} />}
         <Footer />
       </ThemeProvider>
