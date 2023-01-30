@@ -7,12 +7,6 @@ import Footer from './Footer';
 import docs from './Docs.json';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 
-/*const theme = createTheme({
-  typography: {
-    fontSize: 9,
-  },
-});*/
-
 const theme = createTheme({
   typography: {
     h1:{
