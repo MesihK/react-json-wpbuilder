@@ -15,7 +15,7 @@ const debounce = (func, delay) => {
     };
 };
 
-function PDB({ path, height = '400px', name }) {
+function PDB({ path, name, pdb="", height = '400px' }) {
 
     const reprList = useMemo(() => [
         { type: 'cartoon', params: { colorScheme: "sstruc", smoothSheet: true } }
@@ -28,12 +28,25 @@ function PDB({ path, height = '400px', name }) {
         setCameraState(nextCameraState);
     }, 300);
 
+    let loadFileParams = { 
+        name: '',
+        status: '',
+        visible: true,
+    };
+
+    if (pdb !== ""){
+        path = new Blob( [ pdb ], { type: 'text/plain'} );
+        loadFileParams.ext = "pdb"
+    }
+
+    console.log(loadFileParams,path);
+
     return (
         <Paper elevation={1}>
             <Box textAlign='center'>
                 {name && <Typography variant='subtitle1'>{name}</Typography>}
                 <Stage height={height} params={params} cameraState={cameraState} onCameraMove={handleCameraMove} >
-                    <Component path={path} reprList={reprList} onLoad={() => {
+                    <Component path={path} reprList={reprList} loadFileParams={loadFileParams} onLoad={() => {
                         if (cameraState == null) setTimeout(() => setCameraState({}), 200);
                     }} />
                 </Stage>
