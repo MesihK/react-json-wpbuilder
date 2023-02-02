@@ -8,6 +8,7 @@ import { Grid, Container, CardMedia, Typography, Paper } from '@mui/material';
 import { v4 } from 'uuid';
 import PlotlyChart from './PlotlyChart';
 import UL from './UL';
+import AlnPDB from './AlnPDB';
 
 const supportedHTMLTags = ['h1','h2','h3','p'];
 
@@ -29,6 +30,8 @@ const Page = ({ data }) => {
           return <Grid item xs={xs} key={'g:'+key}><MUIDataTable {...value} key={key}/></Grid>
         else if (type === 'pdb')
           return <Grid item  xs={xs}  key={'g:'+key}><PDB {...value} key={key}/></Grid>
+        else if (type === 'alnpdb')
+          return <Grid item  xs={xs}  key={'g:'+key}><AlnPDB {...value} key={key}/></Grid>
         else if (type === 'md')
           return <Grid item  xs={xs}  key={'g:'+key}><MD markdown={value}  key={key} /></Grid>
         else if (type === 'plot')
