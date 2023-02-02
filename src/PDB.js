@@ -15,10 +15,12 @@ const debounce = (func, delay) => {
     };
 };
 
-function PDB({ path, name, pdb="", height = '400px' }) {
+function PDB({ path, name, pdb="",
+               repr={ type: 'cartoon', params: { colorScheme: "sstruc", smoothSheet: true } },
+               height = '400px' }) {
 
     const reprList = useMemo(() => [
-        { type: 'cartoon', params: { colorScheme: "sstruc", smoothSheet: true } }
+        repr
     ], []);
     const params = { backgroundColor: "white" };
 
