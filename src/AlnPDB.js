@@ -1,4 +1,4 @@
-import React from 'react'
+import {React, useState} from 'react'
 import PDB from './PDB';
 import { pairwise_align, perc_identity, protsub_matrix } from "./bio/align";
 import { parse_pdb, ss_align } from "./bio/pdb";
@@ -67,10 +67,26 @@ function AlnPDB({ pdb1, pdb2, alnpdb, name1="PDB1", name2="PDB2", lineLen=75, in
     2. OK Predict SS
     3. OK Align sequences
     4. OK Format alignment
-    5. Show PDB + Alignment
-    6. Fetch PDB's */
-    let [seq1, ss1] = parse_pdb(pdb1);
-    let [seq2, ss2] = parse_pdb(pdb2);
+    5. OK Show PDB + Alignment
+    6. OK Fetch PDB's */
+    let [textPDB1, setTextPDB1] = useState("");
+    let [textPDB2, setTextPDB2] = useState("");
+    let [textAlnPDB, setTextAlnPDB] = useState("");
+
+    if(pdb1.startsWith("http")){
+        fetch(pdb1).then(response => response.text()).then(response => setTextPDB1(response));
+    } else textPDB1 = pdb1;
+    if(pdb2.startsWith("http")){
+        fetch(pdb2).then(response => response.text()).then(response => setTextPDB2(response));
+    } else textPDB2 = pdb2;
+    if(alnpdb.startsWith("http")){
+        fetch(alnpdb).then(response => response.text()).then(response => setTextAlnPDB(response));
+    } else textAlnPDB = alnpdb;
+
+    if(textPDB1 === "" || textPDB2 === "") return <Typography>Fetching PDB's</Typography>;
+
+    let [seq1, ss1] = parse_pdb(textPDB1);
+    let [seq2, ss2] = parse_pdb(textPDB2);
     let [seq1aln, seq2aln] = pairwise_align(seq1, seq2, protsub_matrix, -5, -1, false, true)
     let ss1aln = ss_align(seq1aln, ss1);
     let ss2aln = ss_align(seq2aln, ss2);
@@ -105,10 +121,10 @@ function AlnPDB({ pdb1, pdb2, alnpdb, name1="PDB1", name2="PDB2", lineLen=75, in
     }
     return <Container key={v4()}>
         <Grid container spacing={1} key={v4()}>
-            <Grid item xs={4} key={v4()}><PDB pdb={alnpdb} name={"Aligned Structures"}repr={{ type: 'cartoon'}} key={v4()}/></Grid>
-            <Grid item xs={4} key={v4()}><PDB pdb={pdb1} name={name1} key={v4()}/></Grid>
-            <Grid item xs={4} key={v4()}><PDB pdb={pdb2} name={name2} key={v4()}/></Grid>
-            <Grid item xs={4} key={v4()}><Typography key={v4()}>Test</Typography></Grid>
+            <Grid item xs={4} key={v4()}><PDB pdb={textAlnPDB} name={"Aligned Structures"}repr={{ type: 'cartoon'}} key={v4()}/></Grid>
+            <Grid item xs={4} key={v4()}><PDB pdb={textPDB1} name={name1} key={v4()}/></Grid>
+            <Grid item xs={4} key={v4()}><PDB pdb={textPDB1} name={name2} key={v4()}/></Grid>
+            {info && <Grid item xs={4} key={v4()}><Typography key={v4()}>{info}</Typography></Grid>}
         </Grid>
         <Grid container spacing={1} alignItems="center" justifyContent="center" key={v4()}>
             <Grid item key={v4()}><pre style={{ fontFamily: "'Roboto Mono', monospace" }}>{cmp}</pre></Grid>
