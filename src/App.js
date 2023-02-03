@@ -78,10 +78,12 @@ function Home(){
     const reader = new FileReader();
     reader.onload = (e) => {
       //update the database
-      db.myObjectStore.put({id:1, data: e.target.result, name:file.name.split('.')[0]}).then(() => console.log('sucsefully file written to db'))
+      db.myObjectStore.put({id:1, data: e.target.result, name:file.name.split('.')[0]}).then(() => {
+        console.log('file json sucsefully file written to db'); 
+        setData({content:JSON.parse(e.target.result), name:file.name.split('.')[0]});
+        navigate('/');
+      })
         .catch(error => console.log('db write error', error));
-      setData({content:JSON.parse(e.target.result), name:file.name.split('.')[0]});
-      navigate('/');
     };
     reader.readAsText(file);
   }
@@ -117,7 +119,7 @@ function Home(){
       console.log('Load documents');
     })
   }
-
+  console.log(content);
   return (
     <>
       <ThemeProvider theme={theme}>
