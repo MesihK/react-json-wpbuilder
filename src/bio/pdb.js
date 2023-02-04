@@ -84,22 +84,55 @@ let aa3to1 = {
     'MSE': 'M',
 }
 
-export function ss_align(aligned,ss){
-    let aligned_ss = '';
-    let i = 0;
-    let last_ss = ss[0];
-    for (let a of aligned){
-        if (a !== '-'){
-            last_ss = ss[i++];
-            aligned_ss += last_ss;
+//if a secondary structure is shorter then the threshold, then remove it.
+function clean_ss(ss,thr=3){
+    let cleaned = "";
+    let i=0;
+    while (i<ss.length){
+        if (ss[i] === 'H' || ss[i] === 'E') {
+            let j = i;
+            while (ss[j] === ss[i]) {
+                j++;
+            }
+            let ssLength = j - i;
+            if (ssLength < thr)
+                cleaned += "G".repeat(ssLength);
+            else
+                cleaned += ss[i].repeat(ssLength);
+            i = j;
         } else {
-            aligned_ss += last_ss;
+            cleaned += ss[i++];
+        }
+    }
+    return cleaned;
+}
+
+//align secondary structure to aligned sequence. If a gap exists inside a secondary structure, then assing that ss to the gap.
+export function ss_align(aligned, ss) {
+    ss = clean_ss(ss,3);
+    let aligned_ss = '';
+    let i = 0, i2 = 0;
+    while (i < aligned.length) {
+        if (aligned[i] === '-') {
+            let j = i;
+            while (aligned[j] === '-') {
+                j++;
+            }
+            let gapLength = j - i;
+            if (i > 0 && j < aligned.length && ss[i2 - 1] === ss[i2]) {
+                aligned_ss += ss[i2].repeat(gapLength);
+            } else aligned_ss += "G".repeat(gapLength);
+            i = j;
+        } else {
+            aligned_ss += ss[i2];
+            i2 += 1;
+            i += 1;
         }
     }
     return aligned_ss;
 }
 
-export function parse_pdb(pdb, chain='A') {
+export function parse_pdb(pdb, chain = 'A') {
     let seq = [];
     let coord = [];
     for (let line of pdb.split('\n')) {
