@@ -16,6 +16,7 @@
     "plotly.js-basic-dist-min": "^2.18.0",
     "prism-react-renderer": "^1.3.5",
     "react": "^18.2.0",
+    "react-alignment-viewer": "^0.5.5",
     "react-data-table-component": "^7.5.3",
     "react-dom": "^18.2.0",
     "react-ngl": "^0.2.3",
