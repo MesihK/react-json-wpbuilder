@@ -106,8 +106,8 @@ function Home(){
 
   let pages = [];
   Object.keys(data.content).forEach(key => {
-    const [type, name, xs=12] = key.split(':');
-    if (type == "navpage"){
+    const [type, name, xs] = key.split(':');
+    if (type === "navpage"){
         pages.push(name);
     }
   })
