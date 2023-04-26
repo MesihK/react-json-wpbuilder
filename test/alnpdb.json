@@ -1,0 +1,11 @@
+{
+  "alnpdb:test":{
+    "pdb1":"https://alphafold.ebi.ac.uk/files/AF-O60091-F1-model_v4.pdb",
+    "name1":"O60091",
+    "pdb2":"https://alphafold.ebi.ac.uk/files/AF-P36525-F1-model_v4.pdb",
+    "name2":"P36525",
+    "alnpdb":"https://raw.githubusercontent.com/MesihK/react-json-wpbuilder/master/test/O60091.P36525.pdb",
+    "lineLen":120,
+    "info":"PROST found O60091 as homolog for yeast P36525. The alignment with FATCAT tool produces significant similarity with a p-value of 1.89e-05."
+  }
+}

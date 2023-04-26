@@ -62,7 +62,7 @@ function PrintLine(s1, ss1, s2, ind, total, realLen) {
     return cmp
 }
 
-function AlnPDB({ pdb1, pdb2, alnpdb, name1 = "PDB1", name2 = "PDB2", lineLen = 75, info }) {
+function AlnPDB({ pdb1, pdb2, alnpdb, name1 = "Structure 1", name2 = "Structure 2", lineLen = 75, gapOpen=-5, gapEx=-1, info }) {
     /*TODO:
     1. OK Extract sequence and CA coordinates
     2. OK Predict SS
@@ -112,13 +112,16 @@ function AlnPDB({ pdb1, pdb2, alnpdb, name1 = "PDB1", name2 = "PDB2", lineLen = 
     let start = performance.now();
     let [seq1, ss1] = parse_pdb(textPDB1);
     let [seq2, ss2] = parse_pdb(textPDB2);
-    let [seq1aln, seq2aln] = pairwise_align(seq1, seq2, protsub_matrix, -5, -1, false, true)
+    let [seq1aln, seq2aln] = pairwise_align(seq1, seq2, protsub_matrix, gapOpen, gapEx, false, true)
     let ss1aln = ss_align(seq1aln, ss1);
     let ss2aln = ss_align(seq2aln, ss2);
     let lblLen = Math.max(name1.length, name2.length);
     let totaLen = seq1aln.length;
     let end = performance.now();
     console.log(`Parse & align time: ${end - start} ms`);
+    let percId = perc_identity([seq1aln,seq2aln]);
+    console.log('Idenity:',percId);
+    info = `Globally aLigned using PROSTSUB matrix with a gap opening penalty: ${gapOpen}, gap extension penalty: ${gapEx}. The sequence idenity is: ${percId.toFixed(2)}%. \n${info}`;
     /*
     console.log(seq1, ss1);
     console.log(seq2, ss2);
@@ -134,7 +137,8 @@ function AlnPDB({ pdb1, pdb2, alnpdb, name1 = "PDB1", name2 = "PDB2", lineLen = 
     let cmp = []
     let realLen1 = { len: 0 };
     let realLen2 = { len: 0 };
-    for (let printLine = 0; printLine < Math.round(totaLen / lineLen + 0.5); printLine++) {
+    let totalLine = Math.round(totaLen / lineLen + 0.5);
+    for (let printLine = 0; printLine < totalLine; printLine++) {
         let c1 = <Box variant="div" key={v4()}>
             <Norm key={v4()}>{name1.padStart(lblLen) + " "}</Norm>
             {PrintLine(seq1aln, ss1aln, seq2aln, printLine * lineLen, lineLen, realLen1)}
@@ -145,20 +149,20 @@ function AlnPDB({ pdb1, pdb2, alnpdb, name1 = "PDB1", name2 = "PDB2", lineLen = 
         </Box>
         cmp.push(c1);
         cmp.push(c2);
-        cmp.push(<Box variant="div" key={v4()}> </Box>)
+        if (printLine < totalLine-1) cmp.push(<Box variant="div" key={v4()}> </Box>)
     }
     end = performance.now();
     console.log(`React alignment component creation time: ${end - start} ms`);
-    return <Container key={v4()}>
+    return <>
         <Grid container spacing={1} key={v4()}>
-            <Grid item xs={4} key={v4()}><PDB pdb={textAlnPDB} name={"Aligned Structures"} repr={{ type: 'cartoon' }} key={v4()} /></Grid>
             <Grid item xs={4} key={v4()}><PDB pdb={textPDB1} name={name1} key={v4()} /></Grid>
             <Grid item xs={4} key={v4()}><PDB pdb={textPDB2} name={name2} key={v4()} /></Grid>
-            {info && <Grid item xs={4} key={v4()}><Typography key={v4()}>{info}</Typography></Grid>}
+            <Grid item xs={4} key={v4()}><PDB pdb={textAlnPDB} name={"Aligned Structures"} repr={{ type: 'cartoon' }} key={v4()} /></Grid>
+            {info && <Grid item key={v4()}><Typography key={v4()}>{info}</Typography></Grid>}
         </Grid>
         <Grid container spacing={1} alignItems="center" justifyContent="center" key={v4()}>
             <Grid item key={v4()}><pre style={{ fontFamily: "'Roboto Mono', monospace" }}>{cmp}</pre></Grid>
         </Grid>
-    </Container>;
+    </>;
 }
 export default AlnPDB;
