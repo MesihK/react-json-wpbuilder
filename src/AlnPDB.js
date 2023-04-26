@@ -121,7 +121,7 @@ function AlnPDB({ pdb1, pdb2, alnpdb, name1 = "Structure 1", name2 = "Structure 
     console.log(`Parse & align time: ${end - start} ms`);
     let percId = perc_identity([seq1aln,seq2aln]);
     console.log('Idenity:',percId);
-    info = `Globally aLigned using PROSTSUB matrix with a gap opening penalty: ${gapOpen}, gap extension penalty: ${gapEx}. The sequence idenity is: ${percId.toFixed(2)}%. \n${info}`;
+    info = `Globally aligned using PROSTSUB matrix with a gap opening penalty: ${gapOpen}, gap extension penalty: ${gapEx}. The sequence idenity is: ${percId.toFixed(2)}%. \n${info}`;
     /*
     console.log(seq1, ss1);
     console.log(seq2, ss2);
