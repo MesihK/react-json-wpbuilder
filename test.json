@@ -1,31 +1,12 @@
 {
-    "h1:title": "This is a test",
+    "h1:title": "Cytoscape Netowrk Test",
     "p:p1": "A paragraph",
-    "md:markdowntest": "This is a markdown test:\n\nA paragraph with *emphasis* and **strong importance**.\n\n> A block quote with ~strikethrough~ and a URL: https://reactjs.org.\n\n* Lists\n* [ ] todo\n* [x] done\n\nA table:\n\n| a | b |\n| - | - |\n",
-    "md:md2":"# A demo of `react-markdown`\n\n`react-markdown` is a markdown component for React.\n\n👉 Changes are re-rendered as you type.\n\n👈 Try writing some markdown on the left.\n\n## Overview\n\n* Follows [CommonMark](https://commonmark.org)\n* Optionally follows [GitHub Flavored Markdown](https://github.github.com/gfm/)\n* Renders actual React elements instead of using `dangerouslySetInnerHTML`\n* Lets you define your own components (to render `MyHeading` instead of `h1`)\n* Has a lot of plugins\n\n## Table of contents\n\nHere is an example of a plugin in action\n([`remark-toc`](https://github.com/remarkjs/remark-toc)).\nThis section is replaced by an actual table of contents.\n\n## Syntax highlighting\n\nHere is an example of a plugin to highlight code:\n[`rehype-highlight`](https://github.com/rehypejs/rehype-highlight).\n\n```js\nimport React from 'react'\nimport ReactDOM from 'react-dom'\nimport ReactMarkdown from 'react-markdown'\nimport rehypeHighlight from 'rehype-highlight'\n\nReactDOM.render(\n  <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{'# Your markdown here'}</ReactMarkdown>,\n  document.querySelector('#content')\n)\n```",
-    "page:page2": {
-        "h2:p2title": "Secondary page",
-        "p:p2:4": "Another paragraph",
-        "seq:testseq:4": "MAACCAACAKKV",
-        "pdb:3pqr:4": {
-            "path":"rcsb://4hhb",
-            "height":"400px"
-        }
-    },
-    "navpage:about":{
-        "h2:abouttitle":"About",
-        "md:info":"Hello this is a website builder."
-    },
-    "table:t1": {
-        "columns": ["l:column1","column2"],
-        "rows":[["/page1@Page 1",1],["/page2@Page 2",2]]
-    },
-    "plot:p1:6": {
-        "data": [{
-            "x": ["giraffes","orangutans","monkeys"],
-            "y": [20,14,23],
-            "type": "bar"
-        }],
-        "height":400
+    "cytoscape:test": {
+        "elements": [
+            { "data": { "id": "one", "label": "Node 1" }, "position": { "x": 0, "y": 0 } },
+            { "data": { "id": "two", "label": "Node 2" }, "position": { "x": 100, "y": 0 } },
+            { "data": { "source": "one", "target": "two", "label": "Edge from Node1 to Node2"}, "position": { "x": 100, "y": 0 } }
+         ],
+         "height": "500px"
     }
 }

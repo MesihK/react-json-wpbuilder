@@ -10,6 +10,7 @@ import PlotlyChart from './PlotlyChart';
 import UL from './UL';
 import AlnPDB from './AlnPDB';
 import {AlignmentViewer} from 'react-alignment-viewer';
+import Network from './Network';
 
 const supportedHTMLTags = ['h1','h2','h3','p'];
 
@@ -43,6 +44,8 @@ const Page = ({ data }) => {
           return <Grid item  xs={xs}  key={'g:'+key}><CardMedia component="img" image={value.src} height={value.height} sx={{ padding: "1em 1em 0 1em", objectFit: "contain" }} key={key}/></Grid>
         else if (type === 'ul')
           return <Grid item  xs={xs}  key={'g:'+key}><UL items={value} key={key}/></Grid>
+        else if (type == 'cytoscape')
+          return <Grid item  xs={xs}  key={'g:'+key}><Network {...value} key={key}/></Grid>
         else if (supportedHTMLTags.includes(type))
           return <Grid item  xs={xs}  key={'g:'+key}><Typography variant={type} key={key}>{value}</Typography></Grid>
         else{
