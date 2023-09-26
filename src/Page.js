@@ -17,7 +17,7 @@ const supportedHTMLTags = ['h1','h2','h3','p'];
 const Page = ({ data }) => {
   return (
     //<Grid container align="center" justify="center" direction="column">
-    <Container>
+    <Container  maxWidth="xl">
     <Grid container spacing={1}>
       {Object.keys(data).map((key) => {
         const [type, name, xs=12] = key.split(':');
