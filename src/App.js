@@ -6,6 +6,7 @@ import AppBar from './AppBar';
 import Footer from './Footer';
 import docs from './Docs.json';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import pako from 'pako';
 
 const theme = createTheme({
   typography: {
@@ -47,28 +48,66 @@ function Home(){
     //If a json path given through the url wait for it to be loaded instead of getting data from local db
     if (!jsonPath){
       // Fetch data from the database when the component mounts
+      console.log('---READ DB---')
       db.myObjectStore.get(1)
       .then(dbData => {
-          if (dbData) {
-              setData({content:JSON.parse(dbData.data), name:dbData.name});
+        if (dbData) {
+          try {
+            // Decompress the gzipped data
+            const decompressedData = pako.inflate(dbData.data, { to: 'string' });
+            const jsonData = JSON.parse(decompressedData);
+            setData({ content: jsonData, name: dbData.name });
+          } catch (error) {
+            console.error('Error decompressing data', error);
           }
-      }).catch(error => console.log('db read error', error));
+        }
+      })
+      .catch(error => console.log('db read error', error));
     }
   }, []);
 
   if (jsonPath){
     console.log("load json from:",jsonPath);
     let name = jsonPath.split('/').at(-1).split('.')[0];
-    fetch(jsonPath).then(response => response.json()).then(jsonData => {
+    fetch(jsonPath)
+    .then(response => {
+      // Check if the response is gzipped
+      if (jsonPath.endsWith('.gz') || jsonPath.endsWith('.gzip')) {
+        // If response is gzipped, we need to first convert it to a Blob, then use FileReader to read it as ArrayBuffer
+        return response.blob().then(blob => {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              try {
+                // Decompress the gzipped data
+                const decompressed = pako.inflate(new Uint8Array(e.target.result), { to: 'string' });
+                resolve(JSON.parse(decompressed));
+              } catch (err) {
+                reject(err);
+              }
+            };
+            reader.onerror = reject;
+            reader.readAsArrayBuffer(blob);
+          });
+        });
+      } else {
+        // If response is not gzipped, we can directly parse it as JSON
+        return response.json();
+      }
+    })
+    .then(jsonData => {
+      // Here we use pako to gzip compress the JSON data
+      const compressedData = pako.gzip(JSON.stringify(jsonData));
+  
       //update the database
-      db.myObjectStore.put({id:1, data: JSON.stringify(jsonData), name:name},1).then(() => {
-        setData({content:jsonData, name:name});
+      db.myObjectStore.put({ id: 1, data: compressedData, name: name }, 1).then(() => {
+        setData({ content: jsonData, name: name });
         navigate('/');
-        console.log('sucsefully json from path written to db');
+        console.log('successfully json from path written to db');
       })
-        .catch(error => console.log('db write error', error));;
-
-    }).catch(error => {
+      .catch(error => console.log('db write error', error));
+    })
+    .catch(error => {
       console.error(error);
     });
   }
