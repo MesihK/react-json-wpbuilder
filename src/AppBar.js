@@ -126,7 +126,7 @@ function ResponsiveAppBar({pages, name, handleFileUpload, handleDocumentation}) 
             <Tooltip title="Documentation">
               <HelpOutlineIcon onClick={handleDocumentation} sx={{ p: 0 }}/>
             </Tooltip>
-            <input type="file" id="fileInput" onChange={handleFileUpload} accept=".json" style={{ display: "none" }}/>
+            <input type="file" id="fileInput" onChange={handleFileUpload} accept=".json,.gz,.gzip" style={{ display: "none" }}/>
             <Tooltip title="Load JSON File">
               <UploadFileIcon onClick={() => {
                 let fileInput = document.getElementById("fileInput");

@@ -115,17 +115,45 @@ function Home(){
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
+  
+    // Determine whether the file is gzipped based on the file extension
+    const isGzipped = file.name.endsWith('.gz') || file.name.endsWith('.gzip');
+  
     reader.onload = (e) => {
-      //update the database
-      db.myObjectStore.put({id:1, data: e.target.result, name:file.name.split('.')[0]}).then(() => {
-        console.log('file json sucsefully file written to db'); 
-        setData({content:JSON.parse(e.target.result), name:file.name.split('.')[0]});
-        navigate('/');
-      })
+      let result = e.target.result;
+  
+      // If the file is gzipped, decompress it
+      if (isGzipped) {
+        try {
+          const decompressed = pako.inflate(new Uint8Array(result), { to: 'string' });
+          result = decompressed;
+        } catch (error) {
+          console.error('Error decompressing file', error);
+          return;
+        }
+      }
+  
+      // Convert result to JSON and gzip compress before putting into database
+      const jsonData = JSON.parse(result);
+      const compressedData = pako.gzip(JSON.stringify(jsonData));
+  
+      // Update the database
+      db.myObjectStore.put({ id: 1, data: compressedData, name: file.name.split('.')[0] })
+        .then(() => {
+          console.log('file json successfully written to db');
+          setData({ content: jsonData, name: file.name.split('.')[0] });
+          navigate('/');
+        })
         .catch(error => console.log('db write error', error));
     };
-    reader.readAsText(file);
-  }
+  
+    // Read the file as an ArrayBuffer if it's gzipped, otherwise as text
+    if (isGzipped) {
+      reader.readAsArrayBuffer(file);
+    } else {
+      reader.readAsText(file);
+    }
+  };
 
   const location = useLocation();
   const pathElements = location.pathname.split('/').filter(Boolean);
