@@ -39,7 +39,10 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
 }));
 
 function MUIDataTable({columns, rows}){
-
+    const [paginationModel, setPaginationModel] = React.useState({
+      pageSize: 10,
+      page: 0,
+    });
     const cols = columns.map(column => {
         if(column.startsWith("l:")){
             return { 
@@ -70,6 +73,9 @@ function MUIDataTable({columns, rows}){
         <StripedDataGrid rows={tableData} columns={cols}    
         density="compact" 
         autoHeight={true}    
+        pageSizeOptions={[10,50]}
+        paginationModel={paginationModel}
+        onPaginationModelChange={setPaginationModel}
         components={{ Toolbar: GridToolbar }}
         componentsProps={{
         toolbar: {
