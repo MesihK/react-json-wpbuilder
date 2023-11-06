@@ -33,7 +33,7 @@ function ResponsiveAppBar({pages, name, handleFileUpload, handleDocumentation}) 
 
   return (
     <React.Fragment>
-      <AppBar position="sticky">
+      <AppBar position="sticky" sx={{mb:1}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <ScreenShareIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
