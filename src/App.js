@@ -42,11 +42,12 @@ function Home(){
   let query = useQuery();
   let jsonPath = query.get("json")
 
-  const [data, setData] = useState({content: docs, name:'Docs'});
+  const [data, setData] = useState({content: '', name:''});
+  const [isLoading, setIsLoading] = useState({state:Boolean(jsonPath),path:jsonPath});
 
   useEffect(() => {
     //If a json path given through the url wait for it to be loaded instead of getting data from local db
-    if (!jsonPath){
+    if (!jsonPath && !isLoading.state){
       // Fetch data from the database when the component mounts
       console.log('---READ DB---')
       db.myObjectStore.get(1)
@@ -65,6 +66,13 @@ function Home(){
       .catch(error => console.log('db read error', error));
     }
   }, []);
+
+  useEffect(() => {
+    if (data.content && data.name) {
+      navigate('/');
+      setIsLoading({state:false,path:''});
+    }
+  }, [data]); // Only re-run the effect if data changes
 
   if (jsonPath){
     console.log("load json from:",jsonPath);
@@ -101,19 +109,18 @@ function Home(){
   
       //update the database
       db.myObjectStore.put({ id: 1, data: compressedData, name: name }, 1).then(() => {
-        setData({ content: jsonData, name: name });
         navigate('/');
+        setData({ content: jsonData, name: name });
         console.log('successfully json from path written to db');
       })
       .catch(error => console.log('db write error', error));
     })
-    .catch(error => {
-      console.error(error);
-    });
+    .catch(error => console.error(error));
   }
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
+    setIsLoading({state:true,path:file.name});
     const reader = new FileReader();
   
     // Determine whether the file is gzipped based on the file extension
@@ -142,7 +149,6 @@ function Home(){
         .then(() => {
           console.log('file json successfully written to db');
           setData({ content: jsonData, name: file.name.split('.')[0] });
-          navigate('/');
         })
         .catch(error => console.log('db write error', error));
     };
@@ -180,21 +186,27 @@ function Home(){
   })
 
   const handleDocumentation = () => {
-    db.myObjectStore.put({id:1, data: JSON.stringify(docs), name:"Docs"},1).then(() => {
+    db.myObjectStore.put({id:1, data: pako.gzip(JSON.stringify(docs)), name:"Docs"},1).then(() => {
       setData({content:docs, name:"Docs"});
-      navigate('/');
       console.log('Load documents');
     })
   }
   console.log(content);
   return (
-    <>
+    <div>
       <ThemeProvider theme={theme}>
+        <div className={isLoading.state ? "blur" : "App"}>
         <AppBar pages={pages} name={data.name} handleFileUpload={handleFileSelect} handleDocumentation={handleDocumentation}/>
         {content && <Page data={content} />}
         <Footer />
+        </div>
       </ThemeProvider>
-    </>
+      {isLoading.state && <div className="spinner-overlay">
+        <div>{isLoading.path}</div>
+        <div >Loading...</div>
+        <div className="spinner"></div>
+      </div>}
+    </div>
   )
 }
 
