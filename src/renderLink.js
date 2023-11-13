@@ -8,6 +8,9 @@ const Link = styled('a')({
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textDecoration: 'underline',
+  typography: 'caption', 
+  fontSize: '12px',
+  color: 'rgb(25, 118, 210)',
   //color: 'inherit',
 });
 

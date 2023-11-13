@@ -43,12 +43,44 @@ function MUIDataTable({columns, rows}){
       pageSize: 10,
       page: 0,
     });
-    const cols = columns.map(column => {
+
+    const tableData = rows.map((row, index) => {
+        let obj = {id: index+1}
+        columns.map((col,i)=> obj[col] = row[i])
+        return obj;
+    });
+
+    // Calculate flex value for columns
+    const getColumnLength = (cell, isLink) => {
+      if (!cell) return 0;
+      cell = cell.toString();
+      if (isLink) {
+        const atIndex = cell.indexOf('@');
+        return atIndex !== -1 ? cell.length - atIndex - 1 : 0;
+      }
+      return cell.length;
+    };
+  
+    // Calculate maximum length for each column
+    const maxColumnLengths = columns.map((column, colIndex) => 
+      Math.max(...rows.map(row => {
+        const isLinkColumn = column.startsWith('l:');
+        return getColumnLength(row[colIndex], isLinkColumn);
+      }))
+    );
+  
+    // Calculate total maximum length
+    const totalMaxLength = maxColumnLengths.reduce((acc, length) => acc + length, 0);
+
+    const colLengths = maxColumnLengths.map(column => parseFloat(column/totalMaxLength));
+    //console.log(maxColumnLengths,totalMaxLength,colLengths)
+
+    const cols = columns.map((column, index) => {
         if(column.startsWith("l:")){
             return { 
                 headerName: column.substring(2), 
                 field: column, 
-                flex: 1,
+                flex: colLengths[index],
                 minWidth: 80,
                 renderCell: RenderLink
             }
@@ -57,18 +89,14 @@ function MUIDataTable({columns, rows}){
             return { 
                 headerName: column, 
                 field: column, 
-                flex: 1,
+                flex: colLengths[index],
                 headerClassName: 'b',
                 minWidth: 80
             }
         }
     });
 
-    const tableData = rows.map((row, index) => {
-        let obj = {id: index+1}
-        columns.map((col,i)=> obj[col] = row[i])
-        return obj;
-    });
+
     return (
         <StripedDataGrid rows={tableData} columns={cols}    
         density="compact" 
@@ -88,8 +116,22 @@ function MUIDataTable({columns, rows}){
         }
         sx={{
             '.MuiDataGrid-columnHeaderTitle': {
-                typography: 'subtitle1',    
+                typography: 'caption', 
+                fontWeight: 'bold',
+                whiteSpace: "normal",
+                lineHeight: "normal"
             },
+            '.MuiDataGrid-cellContent': {
+              typography: 'caption',    
+            },
+            ".MuiDataGrid-columnHeader": {
+              // Forced to use important since overriding inline styles
+              height: "unset !important"
+            },
+            ".MuiDataGrid-columnHeaders": {
+              // Forced to use important since overriding inline styles
+              maxHeight: "168px !important"
+            }
         }}/>
     );
 }
