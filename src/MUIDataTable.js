@@ -63,7 +63,9 @@ function MUIDataTable({columns, rows}){
   
     // Calculate maximum length for each column
     const maxColumnLengths = columns.map((column, colIndex) => 
-      Math.max(...rows.map(row => {
+      Math.max(...rows
+        .slice(paginationModel.pageSize*paginationModel.page,paginationModel.pageSize*(paginationModel.page+1))
+        .map(row => {
         const isLinkColumn = column.startsWith('l:');
         return getColumnLength(row[colIndex], isLinkColumn);
       }))
@@ -73,7 +75,7 @@ function MUIDataTable({columns, rows}){
     const totalMaxLength = maxColumnLengths.reduce((acc, length) => acc + length, 0);
 
     const colLengths = maxColumnLengths.map(column => parseFloat(column/totalMaxLength));
-    //console.log(maxColumnLengths,totalMaxLength,colLengths)
+    console.log(maxColumnLengths,totalMaxLength,colLengths)
 
     const cols = columns.map((column, index) => {
         if(column.startsWith("l:")){
