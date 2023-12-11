@@ -75,7 +75,7 @@ function make_sec(x) {
     return sec;
 }
 
-let regex = /^ATOM\s{2,6}\d{1,5}\s{2}CA\s{1,2}([A-Z]{3})\s([\s\w])\s{1,6}\d{1,5}\s{1,8}(-?\d*\.\d+|\d+)\s{1,6}(-?\d*\.\d+|\d+)\s{1,6}(-?\d*\.\d+|\d+)/;
+let regex = /^ATOM\s{2,6}\d{1,5}\s{2}CA\s{1,2}([A-Z]{3})\s([\s\w])\s{1,6}\d{1,5}\s{1,8}(-?\d*\.\d+|\d+)\s{0,6}(-?\d*\.\d+|\d+)\s{0,6}(-?\d*\.\d+|\d+)/;
 let aa3to1 = {
     'ALA': 'A', 'VAL': 'V', 'PHE': 'F', 'PRO': 'P', 'MET': 'M',
     'ILE': 'I', 'LEU': 'L', 'ASP': 'D', 'GLU': 'E', 'LYS': 'K',
