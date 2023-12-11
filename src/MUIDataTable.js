@@ -102,6 +102,7 @@ function MUIDataTable({columns, rows}){
     return (
         <StripedDataGrid rows={tableData} columns={cols}    
         density="compact" 
+        disableRowSelectionOnClick
         autoHeight={true}    
         pageSizeOptions={[10,50]}
         paginationModel={paginationModel}
