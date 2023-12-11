@@ -69,7 +69,6 @@ function Home(){
 
   useEffect(() => {
     if (data.content && data.name) {
-      navigate('/');
       setIsLoading({state:false,path:''});
     }
   }, [data]); // Only re-run the effect if data changes
@@ -149,6 +148,7 @@ function Home(){
         .then(() => {
           console.log('file json successfully written to db');
           setData({ content: jsonData, name: file.name.split('.')[0] });
+          navigate('/');
         })
         .catch(error => console.log('db write error', error));
     };
