@@ -8,6 +8,9 @@
 # TM-align: a protein structure alignment algorithm based on the Tm-score
 # (2005) NAR, 33(7) 2302-2309*/
 
+import pako from 'pako';
+
+
 function dist(x, y) {
     const d1 = x[0] - y[0];
     const d2 = x[1] - y[1];
@@ -150,4 +153,31 @@ export function parse_pdb(pdb, chain = 'A') {
         }
     }
     return [seq.join(""), make_sec(coord).join("")];
+}
+
+export function fetchPDB(url, setText, setErr) {
+    if (url.startsWith("http")) {
+        fetch(url).then(response => {
+            if (!response.ok) {
+                setErr("Fetch error!");
+                throw new Error("Fetch error!");
+            } 
+            // Check if the URL ends with .gz to determine how to process the response
+            if (url.endsWith(".gz")){
+                return response.arrayBuffer(); // For compressed content
+            } else {
+                return response.text(); // For regular text content
+            }
+        }).then(response => {
+            if (url.endsWith(".gz")){
+                const uncompressed = pako.inflate(new Uint8Array(response), { to: 'string' });
+                setText(uncompressed);
+            } else {
+                setText(response); // This is for non-compressed content
+            }
+            setErr("");
+        }).catch(error => setErr(error.message + ", link:" + url));
+    } else {
+        setText(url);
+    }
 }

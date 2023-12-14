@@ -1,7 +1,7 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import PDB from './PDB';
 import { pairwise_align, perc_identity, protsub_matrix } from "./bio/align";
-import { parse_pdb, ss_align } from "./bio/pdb";
+import { parse_pdb, ss_align, fetchPDB } from "./bio/pdb";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -10,8 +10,6 @@ import { styled } from '@mui/material/styles';
 import { v4 } from 'uuid';
 import { red } from '@mui/material/colors';
 import { NGL } from 'react-ngl';
-
-
 
 function AlnPDB({ pdb1, pdb2, alnpdb, helixColor = 'C1166B', betaSheetColor = 'D5AE0D', alnPdb1Color = 'C2E1ED', alnPdb2Color = 'D52213', 
      name1 = "Structure 1", name2 = "Structure 2", lineLen = 75, gapOpen=-5, gapEx=-1, info }) {
@@ -108,44 +106,23 @@ function AlnPDB({ pdb1, pdb2, alnpdb, helixColor = 'C1166B', betaSheetColor = 'D
     4. OK Format alignment
     5. OK Show PDB + Alignment
     6. OK Fetch PDB's */
-    console.log('#'+0xF6B494.toString(16))
     let [textPDB1, setTextPDB1] = useState("");
     let [textPDB2, setTextPDB2] = useState("");
     let [textAlnPDB, setTextAlnPDB] = useState("");
     let [err1, setErr1] = useState("");
     let [err2, setErr2] = useState("");
     let [errA, setErrA] = useState("");
-    console.log("err",err1,err2,errA);
 
-    if (pdb1.startsWith("http")) {
-        fetch(pdb1).then(response => {
-            if (!response.ok) throw new Error("Fetch error!", { cause: response });
-            else return response.text()
-        }).then(response => {
-            setTextPDB1(response);
-            setErr1("");
-        }).catch(error => setErr1(error.message + ", link:" + pdb1));
-    } else textPDB1 = pdb1;
-    if (pdb2.startsWith("http")) {
-        fetch(pdb2).then(response => {
-            if (!response.ok) throw new Error("Fetch error!", { cause: response });
-            else return response.text()
-        }).then(response =>  {
-            setTextPDB2(response);
-            setErr2("");
-        }).catch(error => setErr2(error.message + ", link:" + pdb2));
-    } else textPDB2 = pdb2;
-    if (alnpdb.startsWith("http")) {
-        fetch(alnpdb).then(response => {
-            if (!response.ok) throw new Error("Fetch error!", { cause: response });
-            else return response.text()
-        }).then(response =>  {
-            setTextAlnPDB(response);
-            setErrA("");
-        }).catch(error => setErrA(error.message + ", link:" + alnpdb));
-    } else textAlnPDB = alnpdb;
+    useEffect(() => {
+        fetchPDB(pdb1,setTextPDB1,setErr1);
+        fetchPDB(pdb2,setTextPDB2,setErr2);
+        fetchPDB(alnpdb,setTextAlnPDB,setErrA);
+    }, []);
 
-    if (err1 !== "" || err2 !== "" || errA !== "") return <Typography backgroundColor={red[300]}>PDB Fetch Error! message: {err1} {err2} {errA}.</Typography>
+    if (err1 !== "" || err2 !== "" || errA !== "") {
+        console.log("err",err1,err2,errA);
+        return <Typography backgroundColor={red[300]}>PDB Fetch Error! message: {err1} {err2} {errA}.</Typography>
+    }
     if (textPDB1 === "" || textPDB2 === "" || !textPDB1 || !textPDB2) return <Typography>Fetching PDB's</Typography>;
 
     let start = performance.now();

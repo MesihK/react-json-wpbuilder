@@ -1,10 +1,11 @@
-import { React, useMemo, useState } from 'react';
+import { React, useMemo, useState, useEffect } from 'react';
 import { Stage, Component } from 'react-ngl';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
 import { red } from '@mui/material/colors';
+import { fetchPDB } from "./bio/pdb";
 
 const debounce = (func, delay) => {
     let debounceHandler;
@@ -26,7 +27,7 @@ function PDB({ pdb, name,
     const params = { backgroundColor: "white" };
 
     let [cameraState, setCameraState] = useState();
-    let [textPDB, setTextPDB] = useState([pdb,""]);
+    let [textPDB, setTextPDB] = useState("");
     let [err, setErr] = useState("");
 
     const handleCameraMove = debounce(nextCameraState => {
@@ -40,27 +41,18 @@ function PDB({ pdb, name,
         ext: "pdb"
     };
 
-    if (pdb.startsWith("rcsb")) {
+    if (pdb !== null && pdb.startsWith("rcsb")) {
         pdb = pdb.split("://")[1]
-        pdb = "https://files.rcsb.org/download/" + pdb + ".pdb";
+        pdb = "https://files.rcsb.org/download/" + pdb + ".pdb.gz";
     }
-    
-    if (pdb.startsWith("http")) {
-        if (textPDB[1] === "" || textPDB[0] !== pdb)
-            fetch(pdb).then(response => {
-                if (!response.ok) throw new Error("Fetch error!", { cause: response });
-                else return response.text()
-            }).then(response => {
-                setTextPDB([pdb,response]);
-                setErr("");
-            }).catch(error => setErr(error.message));
-    } else {
-        textPDB[1] = pdb;
-    }
+    useEffect(() => {
+        fetchPDB(pdb,setTextPDB,setErr);
+    }, []);
 
-    let pdbFile = new Blob([textPDB[1]], { type: 'text/plain' });
+    if (err !== "" || pdb === "" || pdb == null) return <Typography backgroundColor={red[300]}>PDB Fetch Error! message: {err}, link: {pdb}</Typography>
 
-    if (err !== "") return <Typography backgroundColor={red[300]}>PDB Fetch Error! message: {err}, link: {pdb}</Typography>
+    let pdbFile = new Blob([textPDB], { type: 'text/plain' });
+
     return (
         <Paper elevation={1}>
             <Box textAlign='center'>
