@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
 import {useNavigate } from "react-router-dom";
 
 
@@ -34,8 +35,10 @@ export function RenderLink(params) {
   };
 
   return (
-    <Link onClick={handleClick}>
-      {value}
-    </Link>
+    <Tooltip title="Ctrl+click to open in new tab">
+      <Link  style={{ cursor: 'pointer' }} onClick={handleClick}>
+        {value}
+      </Link>
+    </Tooltip>
   );
 }

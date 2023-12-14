@@ -36,7 +36,10 @@ function ResponsiveAppBar({pages, name, handleFileUpload, handleDocumentation}) 
       <AppBar position="sticky" sx={{mb:1}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <ScreenShareIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Tooltip title="Homepage">
+          <ScreenShareIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} onClick={() => {navigate('/');}} />
+          </Tooltip>
+          <Tooltip title="Homepage">
           <Typography
             variant="h6"
             noWrap
@@ -50,10 +53,12 @@ function ResponsiveAppBar({pages, name, handleFileUpload, handleDocumentation}) 
               letterSpacing: '.2rem',
               color: 'inherit',
               textDecoration: 'none',
+              cursor: 'pointer'
             }}
           >
             {name}
           </Typography>
+          </Tooltip>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -91,7 +96,12 @@ function ResponsiveAppBar({pages, name, handleFileUpload, handleDocumentation}) 
               ))}
             </Menu>
           </Box>
-          <ScreenShareIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          
+          <Tooltip title="Homepage">
+          <ScreenShareIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} onClick={() => {navigate('/');}} />
+          </Tooltip>
+
+          <Tooltip title="Homepage">
           <Typography
             variant="h5"
             noWrap
@@ -110,6 +120,7 @@ function ResponsiveAppBar({pages, name, handleFileUpload, handleDocumentation}) 
           >
             {name}
           </Typography>
+          </Tooltip>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
