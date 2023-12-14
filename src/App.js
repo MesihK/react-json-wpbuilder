@@ -50,6 +50,7 @@ function Home(){
     if (!jsonPath && !isLoading.state){
       // Fetch data from the database when the component mounts
       console.log('---READ DB---')
+      setIsLoading({state:true,path:'Website is'});
       db.myObjectStore.get(1)
       .then(dbData => {
         if (dbData) {
@@ -57,7 +58,9 @@ function Home(){
             // Decompress the gzipped data
             const decompressedData = pako.inflate(dbData.data, { to: 'string' });
             const jsonData = JSON.parse(decompressedData);
+            console.log("db loaded, set data")
             setData({ content: jsonData, name: dbData.name });
+            setIsLoading({state:false,path:''});
           } catch (error) {
             console.error('Error decompressing data', error);
           }
@@ -66,12 +69,6 @@ function Home(){
       .catch(error => console.log('db read error', error));
     }
   }, []);
-
-  useEffect(() => {
-    if (data.content && data.name) {
-      setIsLoading({state:false,path:''});
-    }
-  }, [data]); // Only re-run the effect if data changes
 
   if (jsonPath){
     console.log("load json from:",jsonPath);
@@ -109,8 +106,9 @@ function Home(){
       //update the database
       db.myObjectStore.put({ id: 1, data: compressedData, name: name }, 1).then(() => {
         navigate('/');
-        setData({ content: jsonData, name: name });
         console.log('successfully json from path written to db');
+        setData({ content: jsonData, name: name });
+        setIsLoading({state:false,path:''});
       })
       .catch(error => console.log('db write error', error));
     })
@@ -119,6 +117,7 @@ function Home(){
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
+    console.log('handle file select, set isloading true');
     setIsLoading({state:true,path:file.name});
     const reader = new FileReader();
   
@@ -148,6 +147,7 @@ function Home(){
         .then(() => {
           console.log('file json successfully written to db');
           setData({ content: jsonData, name: file.name.split('.')[0] });
+          setIsLoading({state:false,path:''});
           navigate('/');
         })
         .catch(error => console.log('db write error', error));
@@ -188,6 +188,7 @@ function Home(){
   const handleDocumentation = () => {
     db.myObjectStore.put({id:1, data: pako.gzip(JSON.stringify(docs)), name:"Docs"},1).then(() => {
       setData({content:docs, name:"Docs"});
+      setIsLoading({state:false,path:''});
       console.log('Load documents');
     })
   }
