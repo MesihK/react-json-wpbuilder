@@ -3,6 +3,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import ScreenShareIcon from '@mui/icons-material/ScreenShare';
+import Tooltip from '@mui/material/Tooltip';
 
 export default function Footer() {
   return (
@@ -15,7 +16,11 @@ export default function Footer() {
                 flexWrap: 'wrap',
             }}>
               <ScreenShareIcon sx={{mr: 1}} />
-              <Typography color="black" variant="subtitle1">JSON Web Page Renderer</Typography>
+              <Tooltip title="Click to open JSONWP Article">
+                <Typography color="black" variant="subtitle1"
+                  onClick={()=>{window.open("https://doi.org/10.1093/bioadv/vbad154", '_blank', 'noreferrer');}}
+                  >JSON Web Page Renderer</Typography>
+              </Tooltip>
             </div>  
           </Grid>
           <Grid item xs={12}>
