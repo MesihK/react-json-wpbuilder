@@ -1,5 +1,5 @@
 import React from 'react';
-import Plotly from "plotly.js-basic-dist-min";
+import Plotly from "plotly.js-cartesian-dist-min";
 import createPlotlyComponent from "react-plotly.js/factory";
 import { TitleSharp } from '@mui/icons-material';
 
@@ -12,7 +12,7 @@ export default function PlotlyChart({data, height, xtitle="", ytitle="", title="
     layout={{
       autosize: true,
       height: height,
-      "margin":{"l":40,"r":0,"t":30,"b":30},
+      "margin":{"l":85,"r":0,"t":30,"b":85},
       "title": { "text": title },
       "xaxis": { "title": xtitle },
       "yaxis": { "title": ytitle}
