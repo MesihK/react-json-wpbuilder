@@ -44,7 +44,6 @@ function Home(){
 
   const [data, setData] = useState({content: '', name:''});
   const [isLoading, setIsLoading] = useState({state:Boolean(jsonPath),path:jsonPath});
-
   useEffect(() => {
     //If a json path given through the url wait for it to be loaded instead of getting data from local db
     if (!jsonPath && !isLoading.state){
@@ -64,9 +63,14 @@ function Home(){
           } catch (error) {
             console.error('Error decompressing data', error);
           }
+        } else {
+          setIsLoading({state:false,path:''});
         }
       })
-      .catch(error => console.log('db read error', error));
+      .catch(error => {
+        console.log('db read error', error);
+        setIsLoading({state:false,path:''});
+      });
     }
   }, []);
 
