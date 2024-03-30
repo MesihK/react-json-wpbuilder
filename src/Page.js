@@ -9,7 +9,7 @@ import { v4 } from 'uuid';
 import PlotlyChart from './PlotlyChart';
 import UL from './UL';
 import AlnPDB from './AlnPDB';
-import {AlignmentViewer} from 'react-alignment-viewer';
+import {AlignmentChart, AlignmentViewer} from 'react-alignment-viewer';
 import Network from './Network';
 
 const supportedHTMLTags = ['h1','h2','h3','p'];
@@ -36,6 +36,8 @@ const Page = ({ data }) => {
           return <Grid item  xs={xs}  key={'g:'+key}><AlnPDB {...value} key={key}/></Grid>
         else if (type === 'msa')
           return <Grid item  xs={xs}  key={'g:'+key}><AlignmentViewer {...value} key={key}/></Grid>
+        else if (type === 'msa2')
+          return <Grid item  xs={xs}  key={'g:'+key}><AlignmentChart {...value} key={key}/></Grid>
         else if (type === 'md')
           return <Grid item  xs={xs}  key={'g:'+key}><MD markdown={value}  key={key} /></Grid>
         else if (type === 'plot')
