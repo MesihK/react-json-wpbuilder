@@ -27,7 +27,7 @@ const Page = ({ data }) => {
         if (type === 'section') //but if it's a container page then render it
           return <Grid item  xs={xs}  key={'g:'+key}><Paper sx={{ height: "100%", mb:2}} elevation={3}><Page data={value} key={key}/></Paper></Grid>
         else if (type === 'seq')
-          return <Grid item xs={xs} key={'g:'+key}><ReactSequenceViewer sequence={value}  key={key} id={v4()} /></Grid>
+          return <Grid item xs={xs} key={'g:'+key}><ReactSequenceViewer sequence={value}  key={key} search={true} charsPerLine={50} toolbar={true} title={''} id={v4()} /></Grid>
         else if (type === 'table')
           return <Grid item xs={xs} key={'g:'+key}><MUIDataTable {...value} key={key}/></Grid>
         else if (type === 'pdb')
