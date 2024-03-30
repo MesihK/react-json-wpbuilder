@@ -35,9 +35,9 @@ const Page = ({ data }) => {
         else if (type === 'alnpdb')
           return <Grid item  xs={xs}  key={'g:'+key}><AlnPDB {...value} key={key}/></Grid>
         else if (type === 'msa')
-          return <Grid item  xs={xs}  key={'g:'+key}><AlignmentViewer {...value} key={key}/></Grid>
+          return <Grid item  xs={xs}  key={'g:'+key}><AlignmentViewer {...value} height={null} tileHeight={10} tileWidth={10} key={key}/></Grid>
         else if (type === 'msa2')
-          return <Grid item  xs={xs}  key={'g:'+key}><AlignmentChart {...value} key={key}/></Grid>
+          return <Grid item  xs={xs}  key={'g:'+key}><AlignmentChart {...value} height={null} tileHeight={10} tileWidth={10} key={key}/></Grid>
         else if (type === 'md')
           return <Grid item  xs={xs}  key={'g:'+key}><MD markdown={value}  key={key} /></Grid>
         else if (type === 'plot')
