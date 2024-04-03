@@ -22,7 +22,7 @@ const Page = ({ data }) => {
       {Object.keys(data).map((key) => {
         const [type, name, xs=12] = key.split(':');
         const value = data[key];
-        if (type === 'page' || type === 'navpage') //it's a page don't render it.
+        if (type === 'page' || type === 'navpage' || type === 'title') //it's a page don't render it.
           return null;
         if (type === 'section') //but if it's a container page then render it
           return <Grid item  xs={xs}  key={'g:'+key}><Paper sx={{ height: "100%", mb:2}} elevation={3}><Page data={value} key={key}/></Paper></Grid>

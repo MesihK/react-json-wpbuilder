@@ -196,12 +196,15 @@ function Home(){
       console.log('Load documents');
     })
   }
-  console.log(content);
+
+  let name = data.name;
+  if(data.content.title) name = data.content.title;
+  console.log(name, content);
   return (
     <div>
       <ThemeProvider theme={theme}>
         <div className={isLoading.state ? "blur" : "App"}>
-        <AppBar pages={pages} name={data.name} handleFileUpload={handleFileSelect} handleDocumentation={handleDocumentation}/>
+        <AppBar pages={pages} name={name} handleFileUpload={handleFileSelect} handleDocumentation={handleDocumentation}/>
         {content && <Page data={content} />}
         <Footer />
         </div>
