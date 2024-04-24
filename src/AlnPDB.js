@@ -119,7 +119,7 @@ function AlnPDB({ pdb1, pdb2, alnpdb, helixColor = 'C1166B', betaSheetColor = 'D
         fetchPDB(alnpdb,setTextAlnPDB,setErrA);
     }, []);
 
-    if (err1 !== "" || err2 !== "" || errA !== "") {
+    if (err1 !== "" || err2 !== "") {
         console.log("err",err1,err2,errA);
         return <Typography backgroundColor={red[300]}>PDB Fetch Error! message: {err1} {err2} {errA}.</Typography>
     }
