@@ -77,6 +77,13 @@ function MUIDataTable({columns, rows, pageSize=10}){
     const colLengths = maxColumnLengths.map(column => parseFloat(column/totalMaxLength));
     console.log(maxColumnLengths,totalMaxLength,colLengths)
 
+    let scientificCMP = (v1, v2) => {
+      if (v1 == 'NA' || v1 == '') v1 = Number.POSITIVE_INFINITY;
+      if (v2 == 'NA' || v2 == '') v2 = Number.POSITIVE_INFINITY;
+      const num1 = parseFloat(v1);
+      const num2 = parseFloat(v2);
+      return num1 - num2;
+    }
     const cols = columns.map((column, index) => {
         if(column.startsWith("l:")){
             return { 
@@ -85,6 +92,16 @@ function MUIDataTable({columns, rows, pageSize=10}){
                 flex: colLengths[index],
                 minWidth: 80,
                 renderCell: RenderLink
+            }
+        }
+        else if(column.startsWith("s:")){
+            return {
+                headerName: column.substring(2),
+                field: column,
+                flex: colLengths[index],
+                headerClassName: 'b',
+                minWidth: 80,
+                sortComparator: scientificCMP
             }
         }
         else{
