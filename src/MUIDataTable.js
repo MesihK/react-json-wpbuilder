@@ -50,6 +50,8 @@ function MUIDataTable({columns, rows, pageSize=10}){
         return obj;
     });
 
+    const [colLengths, setColLengths] = React.useState([]);
+
     // Calculate flex value for columns
     const getColumnLength = (cell, isLink) => {
       if (!cell) return 0;
@@ -60,22 +62,22 @@ function MUIDataTable({columns, rows, pageSize=10}){
       }
       return cell.length;
     };
-  
-    // Calculate maximum length for each column
-    const maxColumnLengths = columns.map((column, colIndex) => 
-      Math.max(...rows
-        .slice(paginationModel.pageSize*paginationModel.page,paginationModel.pageSize*(paginationModel.page+1))
-        .map(row => {
-        const isLinkColumn = column.startsWith('l:');
-        return getColumnLength(row[colIndex], isLinkColumn);
-      }))
-    );
-  
-    // Calculate total maximum length
-    const totalMaxLength = maxColumnLengths.reduce((acc, length) => acc + length, 0);
 
-    const colLengths = maxColumnLengths.map(column => parseFloat(column/totalMaxLength));
-    console.log(maxColumnLengths,totalMaxLength,colLengths)
+    React.useEffect(() => {
+        const averageColumnLengths = columns.map((column, colIndex) => {
+            const sumLengths = rows.reduce((acc, row) => {
+                const isLinkColumn = column.startsWith('l:');
+                return acc + getColumnLength(row[colIndex], isLinkColumn);
+            }, 0);
+            return sumLengths / rows.length;
+        });
+
+        const totalAverageLength = averageColumnLengths.reduce((acc, length) => acc + length, 0);
+        const calculatedColLengths = averageColumnLengths.map(column => parseFloat(column / totalAverageLength));
+
+        setColLengths(calculatedColLengths);
+        console.log(averageColumnLengths, totalAverageLength, calculatedColLengths);
+    }, [columns, rows]);
 
     let scientificCMP = (v1, v2) => {
       if (v1 == 'NA' || v1 == '') v1 = Number.POSITIVE_INFINITY;
