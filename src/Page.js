@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import ReactSequenceViewer from 'react-sequence-viewer';
 import MUIDataTable from './MUIDataTable';
 import PDB from './PDB';
@@ -34,8 +35,14 @@ const TableOfContents = ({ items, onClose }) => {
 };
 
 const Page = ({ data }) => {
+  const location = useLocation();
+
   const [tocItems, setTocItems] = useState([]);
   const [showTOC, setShowTOC] = useState(true);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   useEffect(() => {
     const items = Object.keys(data)
