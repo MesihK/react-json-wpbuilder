@@ -1,4 +1,4 @@
-import { React, useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Stage, Component } from 'react-ngl';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';

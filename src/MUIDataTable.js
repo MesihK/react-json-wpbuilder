@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DataGrid, GridToolbar, gridClasses } from '@mui/x-data-grid';
-import { RenderLink } from './RenderLink';
+import { RenderLink } from './renderLink';
 import { alpha, styled } from '@mui/material/styles';
 
 const ODD_OPACITY = 0.2;

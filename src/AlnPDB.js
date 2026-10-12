@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import PDB from './PDB';
 import { pairwise_align, perc_identity, protsub_matrix } from "./bio/align";
 import { parse_pdb, ss_align, fetchPDB } from "./bio/pdb";
